@@ -1,45 +1,42 @@
 #comentario #'''
 #python3 xxxx.py
+
 import  sys
 
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QPushButton,  QLabel,
-							 )
+from PyQt5.QtWidgets import (QApplication, QMainWindow, QPushButton,  QLabel )
 
+class Window             (QMainWindow):
 
+	def __init__         (self):
 
+		super ().__init__()  #metodo construtor
 
-class Window (QMainWindow):
-
-	def __init__ (self):
-
-		super().__init__()  #metodo construtor
-
-		self.title  = "SISTEMA DO COMPUTADOR"      #titulo
-		self.top    = 700        #topo - esquerda para direita
-		self.left   = 300        #esquerda-cima para baixo
-		self.width  = 530        #largura
-		self.height = 500        #altura
+		self.title  = "MEDIDOR DE BATERIA"           #titulo
+		self.top    = 1500                           #topo - esquerda para direita
+		self.left   = 200                            #esquerda-cima para baixo
+		self.width  = 260                            #largura
+		self.height = 70                             #altura
 		self.cor_fundo = 'background-color: #A9A9A9' #cor DarkGray
+		self.jan_fixo_larg = 260
+		self.jan_fixo_alt  = 70
 
 		
 		#################################################################################
 									###############senha
-
+		cv = 25
+		
 		#label
-		self.label_ins_senha  = QLabel     (self)
-		self.label_ins_senha.setText       ("SENHA:")
-		self.label_ins_senha.move          (60,120)                   #x,y
-		self.label_ins_senha.setStyleSheet ('QLabel { font: bold; font-size:15px}')
-		self.label_ins_senha.resize        (70,20)
+		self.label_porcentagem  = QLabel     (self)
+
+		self.label_porcentagem.setText       ("100 %")
+
+		self.label_porcentagem.setStyleSheet ('QLabel { font: bold; font-size:50px}')
+
+		self.label_porcentagem.move          (70,10)                   #x,y externo
+		self.label_porcentagem.resize        (150,40)                  #x,y interno
 
 		
-		#botao
-		self.entrar_sist = QPushButton   (self)
-		self.entrar_sist.setText         ("ENTRAR")
-		self.entrar_sist.move            (60,270)
-		self.entrar_sist.resize          (150,40)
-		self.entrar_sist.setStyleSheet   ('QPushButton { font: bold; font-size: 30px}')
-		self.entrar_sist.clicked.connect (self.entrar_sist_click)
+		
 
 		############################################################################
 		##################esqueceu senha.
@@ -55,6 +52,7 @@ class Window (QMainWindow):
 		self.setWindowTitle (self.title)
 		self.setGeometry    (self.top, self.left, 
 							self.width, self.height)
+		self.setFixedSize   (self.jan_fixo_larg, self.jan_fixo_alt)
 		self.setStyleSheet  ( self.cor_fundo)
 		self.show  ()
 
@@ -64,12 +62,16 @@ class Window (QMainWindow):
 	#entrar no sistema
 	def entrar_sist_click (self):
 		self.label_ins_senha.setText ("concluido")
+
+########################################################################################
+############################
+
+def main               ():
 		
+	App = QApplication (sys.argv)
+	window = Window    ()
+	sys.exit           (App.exec_ ( ))
 
-		
+if __name__ == "__main__":
 
-			
-
-App = QApplication (sys.argv)
-window = Window    ()
-sys.exit           (App.exec_ ( ))
+	main()
