@@ -3,11 +3,13 @@
 
 import  sys
 
-from PyQt5.QtWidgets  import (QApplication, QMainWindow, QPushButton,  QLabel )
+from PyQt5.QtWidgets     import (QApplication, QMainWindow, QPushButton,  QLabel )
 
-from medidor_bateria  import med
+from medidor_bateria     import med
 
-from tamanho_janela           import largura, altura
+from tamanho_janela      import largura, altura
+
+from informacao_bateria  import informacao_carregamento
 
 ###############################################
 # inicio janela
@@ -52,20 +54,113 @@ class Window             (QMainWindow):
 
 		self.Label_Funcao_Janela () 
 		self.Botao_janela        () 
-		self.Tempo_Bateia        ()
+		
 		self.Memoria_ram         ()
 
 
-		#self.Uso_Sistema_bateria ()
+		self.Uso_Sistema_bateria ()     # estado da bateria e uso da bateria
 
 		self.show                ()
 
+	###########################################################################################
+	###########################################################################################
+	# uso de bateria
 
 	######################################################################################
 	# controle de processos de tempo de uso de bateria
 
-	#def Uso_Sistema_bateria (self):
+	def Uso_Sistema_bateria (self):
 
+		self.dados_estado = informacao_carregamento
+
+		if self.dados_estado == True :
+
+			self.Estado_True_Carregamento()
+
+			self.Tempo_Bateria()
+			self.Variaveis_Fixa_Uso_bateria()
+
+		elif self.dados_estado == False :
+
+			self.Estado_False_Carregamento()
+
+			self.Tempo_Bateria()
+			self.Variaveis_Fixa_Uso_bateria()
+
+		############################
+		#################################################################################################
+		####### estado de bateria
+
+	def Estado_True_Carregamento  (self):
+
+		self.Estado_Bateria_Atual       ()
+
+		self.label_tempo_carga.setText  (" CARREGANDO" )
+
+	#######################################################
+
+	def Estado_False_Carregamento (self):
+
+		self. Estado_Bateria_Atual      ()
+
+		self.label_tempo_carga.setText  (" DESCARREGANDO" )
+
+
+		###############################################
+		##############################################################################################
+		####### função variaveis
+
+		###########################################################################################
+		# estado bateria
+
+		'''#############tempo de bateria############'''
+
+	def Tempo_Bateria                    (self):
+
+		#label variavel
+		self.label_tempo_carga  = QLabel     (self)
+
+		self.label_tempo_carga.setText       (" 01H 20M 30s " )
+
+		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
+
+		self.label_tempo_carga.move          (100,5)                   #x,y externo
+		self.label_tempo_carga.resize        (140,30)                  #x,y interno
+
+		
+	def Estado_Bateria_Atual           (self):
+		#label variavel
+		self.label_tempo_carga  = QLabel     (self)
+
+		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
+
+		self.label_tempo_carga.move          (100,40)                   #x,y externo
+		self.label_tempo_carga.resize        (140,30)                   #x,y interno
+
+		#############################################
+		###############################################################################################
+		######### fução fixa
+
+	def Variaveis_Fixa_Uso_bateria     (self):
+
+		#label fixa
+		self.label_inf_bateria  = QLabel     (self)
+
+		self.label_inf_bateria.setText       (" TEMPO:" )
+		self.label_inf_bateria.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3}') # cor: Wheat
+
+		self.label_inf_bateria.move          (10,5)                    #x,y externo
+		self.label_inf_bateria.resize        (80,30)                   #x,y interno
+
+		#label fixa
+		self.label_tempo_carga  = QLabel     (self)
+
+		self.label_tempo_carga.setText       (" ESTADO:" )
+
+		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
+
+		self.label_tempo_carga.move          (10,40)                   #x,y externo
+		self.label_tempo_carga.resize        (80,30)                   #x,y interno
 
 	###################################################################################
 	#@@@@@@@@@@@@@@@@@@@@@@@funções do sistema
@@ -129,54 +224,6 @@ class Window             (QMainWindow):
 
 	def Entrar_Janela_Sistema          (self):
 		print("ola")
-
-
-	###########################################################################################
-	# estado bateria
-
-	def Tempo_Bateia                    (self):
-
-		#label fixa
-		self.label_inf_bateria  = QLabel     (self)
-
-		self.label_inf_bateria.setText       (" TEMPO:" )
-		self.label_inf_bateria.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3}') # cor: Wheat
-
-		self.label_inf_bateria.move          (10,5)                    #x,y externo
-		self.label_inf_bateria.resize        (80,30)                   #x,y interno
-
-		#fat = janela()
-
-		
-		#label variavel
-		self.label_tempo_carga  = QLabel     (self)
-
-		self.label_tempo_carga.setText       (" 01H 20M 30s " )
-
-		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
-
-		self.label_tempo_carga.move          (100,5)                   #x,y externo
-		self.label_tempo_carga.resize        (140,30)                  #x,y interno
-
-		#label fixa
-		self.label_tempo_carga  = QLabel     (self)
-
-		self.label_tempo_carga.setText       (" ESTADO:" )
-
-		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
-
-		self.label_tempo_carga.move          (10,40)                   #x,y externo
-		self.label_tempo_carga.resize        (80,30)                   #x,y interno
-
-		#label variavel
-		self.label_tempo_carga  = QLabel     (self)
-
-		self.label_tempo_carga.setText       (" DESCARREGANDO" )
-
-		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
-
-		self.label_tempo_carga.move          (100,40)                   #x,y externo
-		self.label_tempo_carga.resize        (140,30)                   #x,y interno
 
 	############################################################################
 	#memoria ram
