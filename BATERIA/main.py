@@ -52,15 +52,15 @@ class Window             (QMainWindow):
 		##################################################################################
 		#@@@@@@@@função sistema
 
-		self.Label_Funcao_Janela () 
-		self.Botao_janela        () 
+		self.Label_Funcao_Janela      () 
+		self.Botao_janela             () 
+
+		self.Variaveis_fixa_Sistema   ()     # varaveis fixa: tempo bateria, estado bateria, memoria ram
 		
-		self.Memoria_ram         ()
+		self.Uso_Sistema_bateria      ()     # estado da bateria e uso da bateria
+		self.Sistema_Ram_Por_centagem ()     # quantidade de uso do sistema ram
 
-
-		self.Uso_Sistema_bateria ()     # estado da bateria e uso da bateria
-
-		self.show                ()
+		self.show                     ()
 
 	###########################################################################################
 	###########################################################################################
@@ -68,24 +68,25 @@ class Window             (QMainWindow):
 
 	######################################################################################
 	# controle de processos de tempo de uso de bateria
+	#sistema central
 
-	def Uso_Sistema_bateria (self):
+	def Uso_Sistema_bateria          (self):
 
-		self.dados_estado = informacao_carregamento
+		self.dados_estado     =  informacao_carregamento
 
-		if self.dados_estado == True :
+		if self.dados_estado  == True :
 
-			self.Estado_True_Carregamento()
+			self.Estado_True_Carregamento  ()
 
-			self.Tempo_Bateria()
-			self.Variaveis_Fixa_Uso_bateria()
+			self.Tempo_Bateria             ()
+			
 
 		elif self.dados_estado == False :
 
-			self.Estado_False_Carregamento()
+			self.Estado_False_Carregamento ()
 
-			self.Tempo_Bateria()
-			self.Variaveis_Fixa_Uso_bateria()
+			self.Tempo_Bateria             ()
+			
 
 		############################
 		#################################################################################################
@@ -137,30 +138,33 @@ class Window             (QMainWindow):
 		self.label_tempo_carga.move          (100,40)                   #x,y externo
 		self.label_tempo_carga.resize        (140,30)                   #x,y interno
 
-		#############################################
-		###############################################################################################
-		######### fução fixa
+			
 
-	def Variaveis_Fixa_Uso_bateria     (self):
+	####################################################################################################
+	####################################################################################################
+	######### sistema ram
 
-		#label fixa
-		self.label_inf_bateria  = QLabel     (self)
+	##########################################
+	############################################################################
+	### sistema de controle principal
 
-		self.label_inf_bateria.setText       (" TEMPO:" )
-		self.label_inf_bateria.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3}') # cor: Wheat
+	def Sistema_Ram_Por_centagem (self):
 
-		self.label_inf_bateria.move          (10,5)                    #x,y externo
-		self.label_inf_bateria.resize        (80,30)                   #x,y interno
+		self.Memoria_ram ()
+	############################################################################
+	#memoria ram
 
-		#label fixa
-		self.label_tempo_carga  = QLabel     (self)
+	def Memoria_ram                 (self):
 
-		self.label_tempo_carga.setText       (" ESTADO:" )
+		#label variavel
+		self.label_nome_ram  = QLabel     (self)
 
-		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
+		self.label_nome_ram.setText       ("100" )
+		self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
 
-		self.label_tempo_carga.move          (10,40)                   #x,y externo
-		self.label_tempo_carga.resize        (80,30)                   #x,y interno
+		self.label_nome_ram.move          (260,95)                    #x,y externo
+		self.label_nome_ram.resize        (50,25)                     #x,y interno
+
 
 	###################################################################################
 	#@@@@@@@@@@@@@@@@@@@@@@@funções do sistema
@@ -225,50 +229,60 @@ class Window             (QMainWindow):
 	def Entrar_Janela_Sistema          (self):
 		print("ola")
 
-	############################################################################
-	#memoria ram
+	##########################################################################################
+	##########################################################################################
+	##### variaveis fixa do sistema
 
-	def Memoria_ram                 (self):
+	def Variaveis_fixa_Sistema         (self):
 
-		#label fixa
-		self.label_nome_ram  = QLabel     (self)
-
-		self.label_nome_ram.setText       (" RAM:" )
-		self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #00BFFF}') # cor: Wheat
-
-		self.label_nome_ram.move          (265,70)                    #x,y externo
-		self.label_nome_ram.resize        (80,20)                     #x,y interno
+		###################################################################
+		##### tempo bateria
 
 		#label fixa
-		self.label_nome_ram  = QLabel     (self)
+		self.label_inf_bateria  = QLabel     (self)
 
-		self.label_nome_ram.setText       ("%" )
-		self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
+		self.label_inf_bateria.setText       (" TEMPO:" )
 
-		self.label_nome_ram.move          (315,95)                    #x,y externo
-		self.label_nome_ram.resize        (30,25)                     #x,y interno
+		self.label_inf_bateria.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3}') # cor: Wheat
 
-		#label variavel
-		self.label_nome_ram  = QLabel     (self)
+		self.label_inf_bateria.move          (10,5)                    #x,y externo
+		self.label_inf_bateria.resize        (80,30)                   #x,y interno
 
-		self.label_nome_ram.setText       ("100" )
-		self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
+		###################################################################
+		##### estado bateria
 
-		self.label_nome_ram.move          (260,95)                    #x,y externo
-		self.label_nome_ram.resize        (50,25)                     #x,y interno
+		#label fixa
+		self.label_tempo_carga  = QLabel     (self)
 
+		self.label_tempo_carga.setText       (" ESTADO:" )
 
+		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
 
-	###################################################################################
-	#222222222222222222222222222222 botoes
+		self.label_tempo_carga.move          (10,40)                   #x,y externo
+		self.label_tempo_carga.resize        (80,30)                   #x,y interno
 
-	'''#entrar no sistema
-	def entrar_sist_click (self):
-		se = 100
-		
-		self.sek = str(se)
-		
-		self.label_porcentagem.setText (self.sek )'''
+		###################################################################
+		##### memoria ram
+
+		#label fixa
+		self.label_nome_ram  = QLabel        (self)
+
+		self.label_nome_ram.setText          (" RAM:" )
+
+		self.label_nome_ram.setStyleSheet    ('QLabel { font: bold; font-size:15px; background-color: #00BFFF}') # cor: Wheat
+
+		self.label_nome_ram.move             (260,70)                    #x,y externo
+		self.label_nome_ram.resize           (85,20)                     #x,y interno
+
+		#label fixa
+		self.label_nome_ram  = QLabel        (self)
+
+		self.label_nome_ram.setText          ("%" )
+
+		self.label_nome_ram.setStyleSheet    ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
+
+		self.label_nome_ram.move             (315,95)                    #x,y externo
+		self.label_nome_ram.resize           (30,25)                     #x,y interno
 
 ########################################################################################
 ############################
