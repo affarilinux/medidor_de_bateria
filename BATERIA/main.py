@@ -3,9 +3,11 @@
 
 import  sys
 
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QPushButton,  QLabel )
+from PyQt5.QtWidgets  import (QApplication, QMainWindow, QPushButton,  QLabel )
 
 from medidor_bateria  import med
+
+from tamanho_janela           import largura, altura
 
 ###############################################
 # inicio janela
@@ -20,13 +22,13 @@ class Window             (QMainWindow):
 
 		self.top    = 1500                           #topo - esquerda para direita
 		self.left   = 200                            #esquerda-cima para baixo
-		self.width  = 370                            #largura
-		self.height = 125                            #altura
+		self.width  = largura                            #largura
+		self.height = altura                           #altura
 
 		self.cor_fundo = 'background-color: #A9A9A9' #cor DarkGray
 
-		self.jan_fixo_larg = 370                     #largura
-		self.jan_fixo_alt  = 125					 #altura
+		self.jan_fixo_larg = largura                     #largura
+		self.jan_fixo_alt  = altura				 #altura
 
 		######################################################################
 		#@@@@@@@@@@@@@@@@@@ chamar função
@@ -53,7 +55,16 @@ class Window             (QMainWindow):
 		self.Tempo_Bateia        ()
 		self.Memoria_ram         ()
 
+
+		#self.Uso_Sistema_bateria ()
+
 		self.show                ()
+
+
+	######################################################################################
+	# controle de processos de tempo de uso de bateria
+
+	#def Uso_Sistema_bateria (self):
 
 
 	###################################################################################
