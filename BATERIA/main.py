@@ -11,6 +11,8 @@ from tamanho_janela      import largura, altura
 
 from informacao_bateria  import informacao_carregamento
 
+from memoria_ram         import cal
+
 ###############################################
 # inicio janela
 
@@ -151,6 +153,12 @@ class Window             (QMainWindow):
 	def Sistema_Ram_Por_centagem (self):
 
 		self.Memoria_ram ()
+
+		resultado = cal
+		self.resultado_ram = str (resultado)
+
+		self.label_nome_ram.setText       (self.resultado_ram )
+		
 	############################################################################
 	#memoria ram
 
@@ -159,11 +167,11 @@ class Window             (QMainWindow):
 		#label variavel
 		self.label_nome_ram  = QLabel     (self)
 
-		self.label_nome_ram.setText       ("100" )
+		
 		self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
 
 		self.label_nome_ram.move          (260,95)                    #x,y externo
-		self.label_nome_ram.resize        (50,25)                     #x,y interno
+		self.label_nome_ram.resize        (70,25)                     #x,y interno
 
 
 	###################################################################################
@@ -272,7 +280,7 @@ class Window             (QMainWindow):
 		self.label_nome_ram.setStyleSheet    ('QLabel { font: bold; font-size:15px; background-color: #00BFFF}') # cor: Wheat
 
 		self.label_nome_ram.move             (260,70)                    #x,y externo
-		self.label_nome_ram.resize           (85,20)                     #x,y interno
+		self.label_nome_ram.resize           (105,20)                     #x,y interno
 
 		#label fixa
 		self.label_nome_ram  = QLabel        (self)
@@ -281,7 +289,7 @@ class Window             (QMainWindow):
 
 		self.label_nome_ram.setStyleSheet    ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
 
-		self.label_nome_ram.move             (315,95)                    #x,y externo
+		self.label_nome_ram.move             (335,95)                    #x,y externo
 		self.label_nome_ram.resize           (30,25)                     #x,y interno
 
 ########################################################################################
