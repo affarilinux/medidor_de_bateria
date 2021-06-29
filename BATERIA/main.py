@@ -1,9 +1,15 @@
 #comentario #'''
 #python3 xxxx.py
 
+####################################################################
+### bibliotecas do sistema
 import  sys
+import time
 
 from PyQt5.QtWidgets     import (QApplication, QMainWindow, QPushButton,  QLabel )
+
+#######################################################################
+### arquivos do sistema
 
 from medidor_bateria     import med
 
@@ -60,7 +66,9 @@ class Window             (QMainWindow):
 		self.Variaveis_fixa_Sistema   ()     # varaveis fixa: tempo bateria, estado bateria, memoria ram
 		
 		self.Uso_Sistema_bateria      ()     # estado da bateria e uso da bateria
-		self.Sistema_Ram_Por_centagem ()     # quantidade de uso do sistema ram
+		#self.Sistema_Ram_Por_centagem ()     # quantidade de uso do sistema ram
+
+		self.Memoria_Ram              ()
 
 		self.show                     ()
 
@@ -152,26 +160,42 @@ class Window             (QMainWindow):
 
 	def Sistema_Ram_Por_centagem (self):
 
-		self.Memoria_ram ()
-
 		resultado = cal
 		self.resultado_ram = str (resultado)
 
 		self.label_nome_ram.setText       (self.resultado_ram )
-		
+
+			
+
+				#
+
+			
+		#self.Memoria_ram ()
+
+	#loop_while = self.Sistema_Ram_Por_centagem()
+
+	#def tp():
+		#self.label_nome_ram.setText       ("00.00" )
+
+	#time= self.tp()
+	
 	############################################################################
 	#memoria ram
 
-	def Memoria_ram                 (self):
-
-		#label variavel
-		self.label_nome_ram  = QLabel     (self)
+	def Memoria_Ram                 (self):
+		while (True):
+			#label variavel
+			self.label_nome_ram  = QLabel     (self)
 
 		
-		self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
+			self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
 
-		self.label_nome_ram.move          (260,95)                    #x,y externo
-		self.label_nome_ram.resize        (70,25)                     #x,y interno
+			self.label_nome_ram.move          (260,95)                    #x,y externo
+			self.label_nome_ram.resize        (70,25)                     #x,y interno
+
+		
+			self.Sistema_Ram_Por_centagem()
+			time.sleep(3)
 
 
 	###################################################################################
