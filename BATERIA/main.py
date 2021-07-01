@@ -4,9 +4,15 @@
 ####################################################################
 ### bibliotecas do sistema
 import  sys
-import time
+import  time
+import signal
 
 from PyQt5.QtWidgets     import (QApplication, QMainWindow, QPushButton,  QLabel )
+from PyQt5.QtCore        import QTimer
+
+#import signal
+
+#signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 #######################################################################
 ### arquivos do sistema
@@ -24,307 +30,324 @@ from memoria_ram         import cal
 
 class Window             (QMainWindow):
 
-	def __init__         (self):
+     def __init__         (self):
 
-		super ().__init__()  #metodo construtor
+          super ().__init__()  #metodo construtor
 
-		self.title  = "MEDIDOR DE BATERIA"           #titulo
+          self.title  = "MEDIDOR DE BATERIA"           #titulo
 
-		self.top    = 1500                           #topo - esquerda para direita
-		self.left   = 200                            #esquerda-cima para baixo
-		self.width  = largura                            #largura
-		self.height = altura                           #altura
+          self.top    = 1500                           #topo - esquerda para direita
+          self.left   = 200                            #esquerda-cima para baixo
 
-		self.cor_fundo = 'background-color: #A9A9A9' #cor DarkGray
+          self.width  = largura                            #largura
+          self.height = altura                           #altura
 
-		self.jan_fixo_larg = largura                     #largura
-		self.jan_fixo_alt  = altura				 #altura
+          self.cor_fundo = 'background-color: #A9A9A9' #cor DarkGray
 
-		######################################################################
-		#@@@@@@@@@@@@@@@@@@ chamar função
+          self.jan_fixo_larg = largura                     #largura
+          self.jan_fixo_alt  = altura                   #altura
 
-		self.InitWindow        ()
-		
+          ######################################################################
+          #@@@@@@@@@@@@@@@@@@ chamar função
 
-	def InitWindow               (self):
+          self.InitWindow        ()
 
-		self.setWindowTitle      (self.title)                             # titulo
+###############################################################################
+######## execução de janela
 
-		self.setGeometry         (self.top, self.left, 
-							         self.width, self.height)             # informações da janela
-		self.setFixedSize        (self.jan_fixo_larg, self.jan_fixo_alt)  # tamanho fixo da janela
+     def InitWindow               (self):
 
+          self.setWindowTitle      (self.title)                             # titulo
 
-		self.setStyleSheet       ( self.cor_fundo)                        #cor de fundo
+          self.setGeometry         (self.top, self.left, 
+                                            self.width, self.height)             # informações da janela
+          self.setFixedSize        (self.jan_fixo_larg, self.jan_fixo_alt)  # tamanho fixo da janela
 
-		##################################################################################
-		#@@@@@@@@função sistema
+          self.setStyleSheet       ( self.cor_fundo)                        #cor de fundo
 
-		self.Label_Funcao_Janela      () 
-		self.Botao_janela             () 
+          ##################################################################################
+          #@@@@@@@@função sistema
 
-		self.Variaveis_fixa_Sistema   ()     # varaveis fixa: tempo bateria, estado bateria, memoria ram
-		
-		self.Uso_Sistema_bateria      ()     # estado da bateria e uso da bateria
-		#self.Sistema_Ram_Por_centagem ()     # quantidade de uso do sistema ram
+          self.Label_Funcao_Janela      () 
+          self.Botao_janela             () 
 
-		self.Memoria_Ram              ()
+          self.Variaveis_fixa_Sistema   ()     # varaveis fixa: tempo bateria, estado bateria, memoria ram
+          
+          self.Uso_Sistema_bateria      ()     # estado da bateria e uso da bateria
+          #self.Sistema_Ram_Por_centagem ()     # quantidade de uso do sistema ram
 
-		self.show                     ()
+          self.Memoria_Ram              ()
 
-	###########################################################################################
-	###########################################################################################
-	# uso de bateria
+          self.tp()
 
-	######################################################################################
-	# controle de processos de tempo de uso de bateria
-	#sistema central
 
-	def Uso_Sistema_bateria          (self):
+          self.show                     ()
 
-		self.dados_estado     =  informacao_carregamento
+    
+     def tp(self):
+          self.timer = QTimer(self)
+          self.timer.setInterval(5000)
+          self.timer.timeout.connect(self.faca_algo)
+          self.timer.start()
 
-		if self.dados_estado  == True :
+     def faca_algo(self):
+          print("minha tarefa")
 
-			self.Estado_True_Carregamento  ()
+        #self.Sistema_Ram_Por_centagem()
 
-			self.Tempo_Bateria             ()
-			
+          resultado = cal
+          self.resultado_ram = str (resultado)
 
-		elif self.dados_estado == False :
+          self.label_nome_ram.setText       (self.resultado_ram )
 
-			self.Estado_False_Carregamento ()
 
-			self.Tempo_Bateria             ()
-			
 
-		############################
-		#################################################################################################
-		####### estado de bateria
+     ###########################################################################################
+     ###########################################################################################
+     # uso de bateria
 
-	def Estado_True_Carregamento  (self):
+     ######################################################################################
+     # controle de processos de tempo de uso de bateria
+     #sistema central
 
-		self.Estado_Bateria_Atual       ()
+     def Uso_Sistema_bateria          (self):
 
-		self.label_tempo_carga.setText  (" CARREGANDO" )
+          self.dados_estado     =  informacao_carregamento
 
-	#######################################################
+          if self.dados_estado  == True :
 
-	def Estado_False_Carregamento (self):
+               self.Estado_True_Carregamento  ()
 
-		self. Estado_Bateria_Atual      ()
+               self.Tempo_Bateria             ()
+               
 
-		self.label_tempo_carga.setText  (" DESCARREGANDO" )
+          elif self.dados_estado == False :
 
+               self.Estado_False_Carregamento ()
 
-		###############################################
-		##############################################################################################
-		####### função variaveis
+               self.Tempo_Bateria             ()
+               
+     
 
-		###########################################################################################
-		# estado bateria
+     
+          ############################
+          #################################################################################################
+          ####### estado de bateria
 
-		'''#############tempo de bateria############'''
+     def Estado_True_Carregamento  (self):
 
-	def Tempo_Bateria                    (self):
+          self.Estado_Bateria_Atual       ()
 
-		#label variavel
-		self.label_tempo_carga  = QLabel     (self)
+          self.label_tempo_carga.setText  (" CARREGANDO" )
 
-		self.label_tempo_carga.setText       (" 01H 20M 30s " )
+     #######################################################
 
-		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
+     def Estado_False_Carregamento (self):
 
-		self.label_tempo_carga.move          (100,5)                   #x,y externo
-		self.label_tempo_carga.resize        (140,30)                  #x,y interno
+          self. Estado_Bateria_Atual      ()
 
-		
-	def Estado_Bateria_Atual           (self):
-		#label variavel
-		self.label_tempo_carga  = QLabel     (self)
+          self.label_tempo_carga.setText  (" DESCARREGANDO" )
 
-		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
 
-		self.label_tempo_carga.move          (100,40)                   #x,y externo
-		self.label_tempo_carga.resize        (140,30)                   #x,y interno
+          ###############################################
+          ##############################################################################################
+          ####### função variaveis
 
-			
+          ###########################################################################################
+          # estado bateria
 
-	####################################################################################################
-	####################################################################################################
-	######### sistema ram
+          '''#############tempo de bateria############'''
 
-	##########################################
-	############################################################################
-	### sistema de controle principal
+     def Tempo_Bateria                    (self):
 
-	def Sistema_Ram_Por_centagem (self):
+          #label variavel
+          self.label_tempo_carga  = QLabel     (self)
 
-		resultado = cal
-		self.resultado_ram = str (resultado)
+          self.label_tempo_carga.setText       (" 01H 20M 30s " )
 
-		self.label_nome_ram.setText       (self.resultado_ram )
+          self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
 
-			
+          self.label_tempo_carga.move          (100,5)                   #x,y externo
+          self.label_tempo_carga.resize        (140,30)                  #x,y interno
 
-				#
+          
+     def Estado_Bateria_Atual           (self):
+          #label variavel
+          self.label_tempo_carga  = QLabel     (self)
 
-			
-		#self.Memoria_ram ()
+          self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
 
-	#loop_while = self.Sistema_Ram_Por_centagem()
+          self.label_tempo_carga.move          (100,40)                   #x,y externo
+          self.label_tempo_carga.resize        (140,30)                   #x,y interno
 
-	#def tp():
-		#self.label_nome_ram.setText       ("00.00" )
+               
 
-	#time= self.tp()
-	
-	############################################################################
-	#memoria ram
+     ####################################################################################################
+     ####################################################################################################
+     ######### sistema ram
 
-	def Memoria_Ram                 (self):
-		while (True):
-			#label variavel
-			self.label_nome_ram  = QLabel     (self)
+     ##########################################
+     ############################################################################
+     ### sistema de controle principal
 
-		
-			self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
+     def Sistema_Ram_Por_centagem (self):
 
-			self.label_nome_ram.move          (260,95)                    #x,y externo
-			self.label_nome_ram.resize        (70,25)                     #x,y interno
+          resultado = cal
+          self.resultado_ram = str (resultado)
 
-		
-			self.Sistema_Ram_Por_centagem()
-			time.sleep(3)
+          self.label_nome_ram.setText       (self.resultado_ram )
 
+          #self.tp()
 
-	###################################################################################
-	#@@@@@@@@@@@@@@@@@@@@@@@funções do sistema
+     ############################################################################
+     #memoria ram
 
-	def Label_Funcao_Janela             (self):
+     def Memoria_Ram                 (self):
+                         
+          self.label_nome_ram  = QLabel     (self)
 
-		#label fixa
-		self.label_porcentagem  = QLabel     (self)
+          self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
 
-		self.label_porcentagem.setText       (" BATERIA:" )
+          self.label_nome_ram.move          (260,95)                    #x,y externo
+          self.label_nome_ram.resize        (70,25)                     #x,y interno
 
-		self.label_porcentagem.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #00FF00}') #cor Line
+          
+          #self.Sistema_Ram_Por_centagem()
+               
 
-		self.label_porcentagem.move          (260,5)          #x,y externo
-		self.label_porcentagem.resize        (105,20)         #x,y interno
 
-		#label fixa
-		self.label_porcentagem  = QLabel     (self)
+     ###################################################################################
+     #@@@@@@@@@@@@@@@@@@@@@@@funções do sistema
 
-		self.label_porcentagem.setText       ("%" )
+     def Label_Funcao_Janela             (self):
 
-		self.label_porcentagem.setStyleSheet ('QLabel { font: bold; font-size:35px; background-color: #00FF00}') #cor Line
+          #label fixa
+          self.label_porcentagem  = QLabel     (self)
 
-		self.label_porcentagem.move          (330,30)          #x,y externo
-		self.label_porcentagem.resize        (35,35)           #x,y interno
+          self.label_porcentagem.setText       (" BATERIA:" )
 
-		#fat = janela()
+          self.label_porcentagem.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #00FF00}') #cor Line
 
-		at = med
-		self.medida = str(at)
+          self.label_porcentagem.move          (260,5)          #x,y externo
+          self.label_porcentagem.resize        (105,20)         #x,y interno
 
-		#label variavel
-		self.label_num_var  = QLabel          (self)
+          #label fixa
+          self.label_porcentagem  = QLabel     (self)
 
-		self.label_num_var.setText            (self.medida )
+          self.label_porcentagem.setText       ("%" )
 
-		self.label_num_var.setStyleSheet      ('QLabel { font: bold; font-size:35px; background-color: #00FF00}') #cor Line
+          self.label_porcentagem.setStyleSheet ('QLabel { font: bold; font-size:35px; background-color: #00FF00}') #cor Line
 
+          self.label_porcentagem.move          (330,30)          #x,y externo
+          self.label_porcentagem.resize        (35,35)           #x,y interno
 
-		self.label_num_var.move               (260,30)         #x,y externo
-		self.label_num_var.resize             (65,35)          #x,y interno
+          #fat = janela()
 
+          at = med
+          self.medida = str(at)
 
-		
-	###################################################################################
-	#janela secundaria
+          #label variavel
+          self.label_num_var  = QLabel          (self)
 
-	def Botao_janela              (self):
+          self.label_num_var.setText            (self.medida )
 
-		self.botao_jan  = QPushButton  (self)
+          self.label_num_var.setStyleSheet      ('QLabel { font: bold; font-size:35px; background-color: #00FF00}') #cor Line
 
-		self.botao_jan.setText         ("ENTRAR" )
 
-		self.botao_jan.setStyleSheet   ('QPushButton { font: bold; font-size:25px; background-color: #98FB98}') # cor: PaleGreen
+          self.label_num_var.move               (260,30)         #x,y externo
+          self.label_num_var.resize             (65,35)          #x,y interno
 
-		self.botao_jan.move            (10,80)                       #x,y externo
-		self.botao_jan.resize          (230,40)                      #x,y interno
 
-		self.botao_jan.clicked.connect (self.Entrar_Janela_Sistema)
+          
+     ###################################################################################
+     #janela secundaria
 
+     def Botao_janela              (self):
 
-	def Entrar_Janela_Sistema          (self):
-		print("ola")
+          self.botao_jan  = QPushButton  (self)
 
-	##########################################################################################
-	##########################################################################################
-	##### variaveis fixa do sistema
+          self.botao_jan.setText         ("ENTRAR" )
 
-	def Variaveis_fixa_Sistema         (self):
+          self.botao_jan.setStyleSheet   ('QPushButton { font: bold; font-size:25px; background-color: #98FB98}') # cor: PaleGreen
 
-		###################################################################
-		##### tempo bateria
+          self.botao_jan.move            (10,80)                       #x,y externo
+          self.botao_jan.resize          (230,40)                      #x,y interno
 
-		#label fixa
-		self.label_inf_bateria  = QLabel     (self)
+          self.botao_jan.clicked.connect (self.Entrar_Janela_Sistema)
 
-		self.label_inf_bateria.setText       (" TEMPO:" )
 
-		self.label_inf_bateria.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3}') # cor: Wheat
+     def Entrar_Janela_Sistema          (self):
+          print("ola")
 
-		self.label_inf_bateria.move          (10,5)                    #x,y externo
-		self.label_inf_bateria.resize        (80,30)                   #x,y interno
+     ##########################################################################################
+     ##########################################################################################
+     ##### variaveis fixa do sistema
 
-		###################################################################
-		##### estado bateria
+     def Variaveis_fixa_Sistema         (self):
 
-		#label fixa
-		self.label_tempo_carga  = QLabel     (self)
+          ###################################################################
+          ##### tempo bateria
 
-		self.label_tempo_carga.setText       (" ESTADO:" )
+          #label fixa
+          self.label_inf_bateria  = QLabel     (self)
 
-		self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
+          self.label_inf_bateria.setText       (" TEMPO:" )
 
-		self.label_tempo_carga.move          (10,40)                   #x,y externo
-		self.label_tempo_carga.resize        (80,30)                   #x,y interno
+          self.label_inf_bateria.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3}') # cor: Wheat
 
-		###################################################################
-		##### memoria ram
+          self.label_inf_bateria.move          (10,5)                    #x,y externo
+          self.label_inf_bateria.resize        (80,30)                   #x,y interno
 
-		#label fixa
-		self.label_nome_ram  = QLabel        (self)
+          ###################################################################
+          ##### estado bateria
 
-		self.label_nome_ram.setText          (" RAM:" )
+          #label fixa
+          self.label_tempo_carga  = QLabel     (self)
 
-		self.label_nome_ram.setStyleSheet    ('QLabel { font: bold; font-size:15px; background-color: #00BFFF}') # cor: Wheat
+          self.label_tempo_carga.setText       (" ESTADO:" )
 
-		self.label_nome_ram.move             (260,70)                    #x,y externo
-		self.label_nome_ram.resize           (105,20)                     #x,y interno
+          self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
 
-		#label fixa
-		self.label_nome_ram  = QLabel        (self)
+          self.label_tempo_carga.move          (10,40)                   #x,y externo
+          self.label_tempo_carga.resize        (80,30)                   #x,y interno
 
-		self.label_nome_ram.setText          ("%" )
+          ###################################################################
+          ##### memoria ram
 
-		self.label_nome_ram.setStyleSheet    ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
+          #label fixa
+          self.label_nome_ram  = QLabel        (self)
 
-		self.label_nome_ram.move             (335,95)                    #x,y externo
-		self.label_nome_ram.resize           (30,25)                     #x,y interno
+          self.label_nome_ram.setText          (" RAM:" )
+
+          self.label_nome_ram.setStyleSheet    ('QLabel { font: bold; font-size:15px; background-color: #00BFFF}') # cor: Wheat
+
+          self.label_nome_ram.move             (260,70)                    #x,y externo
+          self.label_nome_ram.resize           (105,20)                     #x,y interno
+
+          #label fixa
+          self.label_nome_ram  = QLabel        (self)
+
+          self.label_nome_ram.setText          ("%" )
+
+          self.label_nome_ram.setStyleSheet    ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
+
+          self.label_nome_ram.move             (335,95)                    #x,y externo
+          self.label_nome_ram.resize           (30,25)                     #x,y interno
+
+    
+
 
 ########################################################################################
 ############################
 
 def main               ():
-		
-	App = QApplication (sys.argv)
-	window = Window    ()
-	sys.exit           (App.exec_ ( ))
+          
+     App = QApplication (sys.argv)
+     window = Window    ()
+
+     #tu = tp()
+     sys.exit           (App.exec_ ( ))
 
 if __name__ == "__main__":
 
-	main()
+     main()
