@@ -8,7 +8,7 @@ import  time
 import signal
 
 from PyQt5.QtWidgets     import (QApplication, QMainWindow, QPushButton,  QLabel )
-from PyQt5.QtCore        import QTimer
+from PyQt5.QtCore        import QTimer, pyqtSlot, QObject, pyqtSignal
 
 #import signal
 
@@ -24,6 +24,12 @@ from tamanho_janela      import largura, altura
 from informacao_bateria  import informacao_carregamento
 
 from memoria_ram         import cal
+
+#self.objeto.sinal.connetc(self.slot)
+class Sinais (QObject):
+
+     sinal1 = pyqtSignal(name = "funcionou") #objeto de classe
+     #self. nao pode ser usado.
 
 ###############################################
 # inicio janela
@@ -78,6 +84,7 @@ class Window             (QMainWindow):
 
           self.Memoria_Ram              ()
 
+          self.sinais = Sinais()
           self.tp()
 
 
@@ -90,15 +97,28 @@ class Window             (QMainWindow):
           self.timer.timeout.connect(self.faca_algo)
           self.timer.start()
 
+     @pyqtSlot() # decorador
      def faca_algo(self):
-          print("minha tarefa")
-
-        #self.Sistema_Ram_Por_centagem()
+          print("minha tarefa cocluida")
 
           resultado = cal
           self.resultado_ram = str (resultado)
 
-          self.label_nome_ram.setText       (self.resultado_ram )
+          self.label_nome_ram.setText        (self.resultado_ram )
+
+          self.sinais.sinal1.connect(self.recebeSinal)
+          self.sinais.sinal1.emit()
+          self.sinais.sinal1.disconnect()
+
+     def recebeSinal(self):
+          print( "sinal recebido")
+
+          resultado = cal
+          self.resultado_ram = str (resultado)
+
+          self.label_nome_ram.setText        (self.resultado_ram )
+
+          
 
 
 
@@ -195,7 +215,7 @@ class Window             (QMainWindow):
           resultado = cal
           self.resultado_ram = str (resultado)
 
-          self.label_nome_ram.setText       (self.resultado_ram )
+          self.label_nome_ram.setText        (self.resultado_ram )
 
           #self.tp()
 
@@ -205,6 +225,8 @@ class Window             (QMainWindow):
      def Memoria_Ram                 (self):
                          
           self.label_nome_ram  = QLabel     (self)
+
+          self.label_nome_ram.setText       ("" )
 
           self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
 
