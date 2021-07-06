@@ -26,18 +26,14 @@ from informacao_bateria  import informacao_carregamento
 
 #from memoria_ram         import cal
 
-#self.objeto.sinal.connetc(self.slot)
-class Sinais (QObject):
-
-     sinal1 = pyqtSignal(name = "funcionou") #objeto de classe
-     #self. nao pode ser usado.
+from main_variavel_fixa                   import Label_fixo
 
 ###############################################
 # inicio janela
 
-class Window             (QMainWindow):
+class Window  (Label_fixo, QMainWindow):
 
-     def __init__         (self):
+     def __init__          (self):
 
           super ().__init__()  #metodo construtor
 
@@ -85,18 +81,18 @@ class Window             (QMainWindow):
           self.Label_Funcao_Janela      () 
           self.Botao_janela             () 
 
-          self.Variaveis_fixa_Sistema   ()     # varaveis fixa: tempo bateria, estado bateria, memoria ram
+          #self.Variaveis_fixa_Sistema   ()     # varaveis fixa: tempo bateria, estado bateria, memoria ram
           
           self.Uso_Sistema_bateria      ()     # estado da bateria e uso da bateria
           #self.Sistema_Ram_Por_centagem ()     # quantidade de uso do sistema ram
 
           self.Memoria_Ram              ()
 
-          self.sinais = Sinais()
-          #self.tp()
+          
 
 
           self.show                     ()
+
      def inwi (self):
           #import time
 
@@ -120,39 +116,6 @@ class Window             (QMainWindow):
 
 
           self.resultado = self.cal
-
-    
-     '''def tp(self):
-          self.timer = QTimer(self)
-          self.timer.setInterval(5000)
-          self.timer.timeout.connect(self.Sistema_Ram_Por_centagem)
-          self.timer.start()
-
-     @pyqtSlot() # decorador
-     def faca_algo(self):
-          print("minha tarefa cocluida")
-
-          resultado = cal
-          self.resultado_ram = str (resultado)
-
-          self.label_nome_ram.setText        (self.resultado_ram )
-
-          self.sinais.sinal1.connect(self.recebeSinal)
-          self.sinais.sinal1.emit()
-
-          self.sinais.sinal1.disconnect()
-
-     def recebeSinal(self):
-          print( "sinal recebido")
-
-          self.resultado +=1
-          self.resultado_ram = str (self.resultado)
-
-          self.label_nome_ram.setText        (self.resultado_ram )'''
-
-          
-
-
 
      ###########################################################################################
      ###########################################################################################
@@ -249,57 +212,35 @@ class Window             (QMainWindow):
 
      def Memoria_Ram                 (self):
           
-
-          
-
-          
-          #
-
           self.label_nome_ram  = QLabel     (self)
-
-          #self.label_nome_ram.setText       ("" )
 
           self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
 
           self.label_nome_ram.move          (260,95)                    #x,y externo
           self.label_nome_ram.resize        (70,25)                     #x,y interno
 
-          
-          #self.Sistema_Ram_Por_centagem()
-          #self.tp()
+                    
           self.timer = QTimer(self)
           self.timer.setInterval(5000)
           self.timer.timeout.connect(self.Sistema_Ram_Por_centagem)
           self.timer.start()
+
      def Sistema_Ram_Por_centagem(self):
-          print("certo")
+          #print("certo")
           
           self.inwi()
-          #self.label_nome_ram.setText("")
+          
           self.resultado_ram = str (self.resultado)
           self.label_nome_ram.setText        (self.resultado_ram )
 
-          '''for i in range(1, 4, 1):
-               
-               if self.cal > 0 :
-                    #self.label_nome_ram.setText("00.00")
-                    #self.cal
-                    #self.informacao
-                    #self.calculo_por_centagem
-
-                    
-
-                    self.resultado_ram = str (self.resultado)
-                    self.label_nome_ram.setText        (self.resultado_ram )
-
-               time.sleep(1)'''
+          
 
      ###################################################################################
      #@@@@@@@@@@@@@@@@@@@@@@@funções do sistema
 
      def Label_Funcao_Janela             (self):
 
-          #label fixa
+          '''#label fixa
           self.label_porcentagem  = QLabel     (self)
 
           self.label_porcentagem.setText       (" BATERIA:" )
@@ -317,7 +258,7 @@ class Window             (QMainWindow):
           self.label_porcentagem.setStyleSheet ('QLabel { font: bold; font-size:35px; background-color: #00FF00}') #cor Line
 
           self.label_porcentagem.move          (330,30)          #x,y externo
-          self.label_porcentagem.resize        (35,35)           #x,y interno
+          self.label_porcentagem.resize        (35,35)           #x,y interno'''
 
           #fat = janela()
 
@@ -361,7 +302,7 @@ class Window             (QMainWindow):
      ##########################################################################################
      ##### variaveis fixa do sistema
 
-     def Variaveis_fixa_Sistema         (self):
+     '''def Variaveis_fixa_Sistema         (self):
 
           ###################################################################
           ##### tempo bateria
@@ -410,7 +351,7 @@ class Window             (QMainWindow):
           self.label_nome_ram.setStyleSheet    ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
 
           self.label_nome_ram.move             (335,95)                    #x,y externo
-          self.label_nome_ram.resize           (30,25)                     #x,y interno
+          self.label_nome_ram.resize           (30,25)                     #x,y interno'''
 
     
 
@@ -423,7 +364,6 @@ def main               ():
      App = QApplication (sys.argv)
      window = Window    ()
 
-     #tu = tp()
      sys.exit           (App.exec_ ( ))
 
 if __name__ == "__main__":
