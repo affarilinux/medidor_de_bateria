@@ -17,8 +17,6 @@ from medidor_bateria     import med
 
 from tamanho_janela      import largura, altura
 
-from informacao_bateria  import informacao_carregamento
-
 #from memoria_ram         import cal
 
 ######################################################################3###########
@@ -26,11 +24,12 @@ from informacao_bateria  import informacao_carregamento
 from main_variavel_fixa  import Label_fixo # janela principal variaveis fixas label
 from main_botao  import Botao_janela # janela principal variaveis fixas label
 from main_tempo  import Temporizador_carga
+from main_estado_bateria import Estado_carga_bateria
 
 ###############################################
 # inicio janela
 
-class Window  (Label_fixo, Botao_janela, Temporizador_carga, 
+class Window  (Label_fixo, Botao_janela, Temporizador_carga, Estado_carga_bateria,
                QMainWindow):
 
      def __init__          (self):
@@ -80,9 +79,6 @@ class Window  (Label_fixo, Botao_janela, Temporizador_carga,
          
           
           
-          self.Uso_Sistema_bateria      ()     # estado da bateria e uso da bateria
-          #self.Sistema_Ram_Por_centagem ()     # quantidade de uso do sistema ram
-
           self.Memoria_Ram              ()
 
           
@@ -114,84 +110,7 @@ class Window  (Label_fixo, Botao_janela, Temporizador_carga,
 
           self.resultado = self.cal
 
-     ###########################################################################################
-     ###########################################################################################
-     # uso de bateria
-
-     ######################################################################################
-     # controle de processos de tempo de uso de bateria
-     #sistema central
-
-     def Uso_Sistema_bateria          (self):
-
-          self.dados_estado     =  informacao_carregamento
-
-          if self.dados_estado  == True :
-
-               self.Estado_True_Carregamento  ()
-
-                         
-               
-
-          elif self.dados_estado == False :
-
-               self.Estado_False_Carregamento ()
-
-               
-               
-     
-
-     
-          ############################
-          #################################################################################################
-          ####### estado de bateria
-
-     def Estado_True_Carregamento  (self):
-
-          self.Estado_Bateria_Atual       ()
-
-          self.label_tempo_carga.setText  (" CARREGANDO" )
-
-     #######################################################
-
-     def Estado_False_Carregamento (self):
-
-          self. Estado_Bateria_Atual      ()
-
-          self.label_tempo_carga.setText  (" DESCARREGANDO" )
-
-
-          ###############################################
-          ##############################################################################################
-          ####### função variaveis
-
-          ###########################################################################################
-          # estado bateria
-
-          '''#############tempo de bateria############'''
-
-
           
-     def Estado_Bateria_Atual           (self):
-          #label variavel
-          self.label_tempo_carga  = QLabel     (self)
-
-          self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
-
-          self.label_tempo_carga.move          (100,40)                   #x,y externo
-          self.label_tempo_carga.resize        (140,30)                   #x,y interno
-
-               
-
-     ####################################################################################################
-     ####################################################################################################
-     ######### sistema ram
-
-     ##########################################
-     ############################################################################
-     ### sistema de controle principal
-
-     
 
      ############################################################################
      #memoria ram
