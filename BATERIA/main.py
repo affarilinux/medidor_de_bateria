@@ -25,11 +25,13 @@ from informacao_bateria  import informacao_carregamento
 
 from main_variavel_fixa  import Label_fixo # janela principal variaveis fixas label
 from main_botao  import Botao_janela # janela principal variaveis fixas label
+from main_tempo  import Temporizador_carga
 
 ###############################################
 # inicio janela
 
-class Window  (Label_fixo, Botao_janela, QMainWindow):
+class Window  (Label_fixo, Botao_janela, Temporizador_carga, 
+               QMainWindow):
 
      def __init__          (self):
 
@@ -75,7 +77,7 @@ class Window  (Label_fixo, Botao_janela, QMainWindow):
           
           self.Label_Funcao_Janela      () 
           
-
+         
           
           
           self.Uso_Sistema_bateria      ()     # estado da bateria e uso da bateria
@@ -128,14 +130,14 @@ class Window  (Label_fixo, Botao_janela, QMainWindow):
 
                self.Estado_True_Carregamento  ()
 
-               self.Tempo_Bateria             ()
+                         
                
 
           elif self.dados_estado == False :
 
                self.Estado_False_Carregamento ()
 
-               self.Tempo_Bateria             ()
+               
                
      
 
@@ -168,17 +170,6 @@ class Window  (Label_fixo, Botao_janela, QMainWindow):
 
           '''#############tempo de bateria############'''
 
-     def Tempo_Bateria                    (self):
-
-          #label variavel
-          self.label_tempo_carga  = QLabel     (self)
-
-          self.label_tempo_carga.setText       (" 01H 20M 30s " )
-
-          self.label_tempo_carga.setStyleSheet ('QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }') # cor: Wheat
-
-          self.label_tempo_carga.move          (100,5)                   #x,y externo
-          self.label_tempo_carga.resize        (140,30)                  #x,y interno
 
           
      def Estado_Bateria_Atual           (self):
