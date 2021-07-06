@@ -6,6 +6,7 @@
 import  sys
 import  time
 import signal
+import psutil 
 
 from PyQt5.QtWidgets     import (QApplication, QMainWindow, QPushButton,  QLabel )
 from PyQt5.QtCore        import QTimer, pyqtSlot, QObject, pyqtSignal
@@ -23,7 +24,7 @@ from tamanho_janela      import largura, altura
 
 from informacao_bateria  import informacao_carregamento
 
-from memoria_ram         import cal
+#from memoria_ram         import cal
 
 #self.objeto.sinal.connetc(self.slot)
 class Sinais (QObject):
@@ -53,6 +54,9 @@ class Window             (QMainWindow):
           self.jan_fixo_larg = largura                     #largura
           self.jan_fixo_alt  = altura                   #altura
 
+          
+          
+
           ######################################################################
           #@@@@@@@@@@@@@@@@@@ chamar função
 
@@ -74,6 +78,10 @@ class Window             (QMainWindow):
           ##################################################################################
           #@@@@@@@@função sistema
 
+          '''resultado = cal
+          self.resultado_ram = str (resultado)'''
+
+
           self.Label_Funcao_Janela      () 
           self.Botao_janela             () 
 
@@ -85,16 +93,39 @@ class Window             (QMainWindow):
           self.Memoria_Ram              ()
 
           self.sinais = Sinais()
-          self.tp()
+          #self.tp()
 
 
           self.show                     ()
+     def inwi (self):
+          #import time
+
+#from main import loop_while, tp
+
+
+# (####main.py####)
+
+# - janela principal
+
+# puxa os dado do sistema operacional
+
+          self.informacao = psutil.virtual_memory()
+
+# puxa as iformações e adiciona nas variaveis
+          self.total  = self.informacao.total
+          self.usada  = self.informacao.active
+
+          self.calculo_por_centagem = (self.usada * 100) / self.total
+          self.cal = round(self.calculo_por_centagem, 2)
+
+
+          self.resultado = self.cal
 
     
-     def tp(self):
+     '''def tp(self):
           self.timer = QTimer(self)
           self.timer.setInterval(5000)
-          self.timer.timeout.connect(self.faca_algo)
+          self.timer.timeout.connect(self.Sistema_Ram_Por_centagem)
           self.timer.start()
 
      @pyqtSlot() # decorador
@@ -108,15 +139,16 @@ class Window             (QMainWindow):
 
           self.sinais.sinal1.connect(self.recebeSinal)
           self.sinais.sinal1.emit()
+
           self.sinais.sinal1.disconnect()
 
      def recebeSinal(self):
           print( "sinal recebido")
 
-          resultado = cal
-          self.resultado_ram = str (resultado)
+          self.resultado +=1
+          self.resultado_ram = str (self.resultado)
 
-          self.label_nome_ram.setText        (self.resultado_ram )
+          self.label_nome_ram.setText        (self.resultado_ram )'''
 
           
 
@@ -210,23 +242,22 @@ class Window             (QMainWindow):
      ############################################################################
      ### sistema de controle principal
 
-     def Sistema_Ram_Por_centagem (self):
-
-          resultado = cal
-          self.resultado_ram = str (resultado)
-
-          self.label_nome_ram.setText        (self.resultado_ram )
-
-          #self.tp()
+     
 
      ############################################################################
      #memoria ram
 
      def Memoria_Ram                 (self):
-                         
+          
+
+          
+
+          
+          #
+
           self.label_nome_ram  = QLabel     (self)
 
-          self.label_nome_ram.setText       ("" )
+          #self.label_nome_ram.setText       ("" )
 
           self.label_nome_ram.setStyleSheet ('QLabel { font: bold; font-size:25px; background-color: #00BFFF}') # cor: Wheat
 
@@ -235,8 +266,33 @@ class Window             (QMainWindow):
 
           
           #self.Sistema_Ram_Por_centagem()
-               
+          #self.tp()
+          self.timer = QTimer(self)
+          self.timer.setInterval(5000)
+          self.timer.timeout.connect(self.Sistema_Ram_Por_centagem)
+          self.timer.start()
+     def Sistema_Ram_Por_centagem(self):
+          print("certo")
+          
+          self.inwi()
+          #self.label_nome_ram.setText("")
+          self.resultado_ram = str (self.resultado)
+          self.label_nome_ram.setText        (self.resultado_ram )
 
+          '''for i in range(1, 4, 1):
+               
+               if self.cal > 0 :
+                    #self.label_nome_ram.setText("00.00")
+                    #self.cal
+                    #self.informacao
+                    #self.calculo_por_centagem
+
+                    
+
+                    self.resultado_ram = str (self.resultado)
+                    self.label_nome_ram.setText        (self.resultado_ram )
+
+               time.sleep(1)'''
 
      ###################################################################################
      #@@@@@@@@@@@@@@@@@@@@@@@funções do sistema
