@@ -5,15 +5,10 @@
 ### bibliotecas do sistema
 import  sys
 import  time
-import signal
 import psutil 
 
 from PyQt5.QtWidgets     import (QApplication, QMainWindow, QPushButton,  QLabel )
 from PyQt5.QtCore        import QTimer, pyqtSlot, QObject, pyqtSignal
-
-#import signal
-
-#signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 #######################################################################
 ### arquivos do sistema
@@ -26,12 +21,15 @@ from informacao_bateria  import informacao_carregamento
 
 #from memoria_ram         import cal
 
+######################################################################3###########
+
 from main_variavel_fixa  import Label_fixo # janela principal variaveis fixas label
+from main_botao  import Botao_janela # janela principal variaveis fixas label
 
 ###############################################
 # inicio janela
 
-class Window  (Label_fixo, QMainWindow):
+class Window  (Label_fixo, Botao_janela, QMainWindow):
 
      def __init__          (self):
 
@@ -74,12 +72,9 @@ class Window  (Label_fixo, QMainWindow):
           ##################################################################################
           #@@@@@@@@função sistema
 
-          '''resultado = cal
-          self.resultado_ram = str (resultado)'''
-
-
+          
           self.Label_Funcao_Janela      () 
-          self.Botao_janela             () 
+          
 
           
           
@@ -257,27 +252,7 @@ class Window  (Label_fixo, QMainWindow):
 
 
           
-     ###################################################################################
-     #janela secundaria
-
-     def Botao_janela              (self):
-
-          self.botao_jan  = QPushButton  (self)
-
-          self.botao_jan.setText         ("ENTRAR" )
-
-          self.botao_jan.setStyleSheet   ('QPushButton { font: bold; font-size:25px; background-color: #98FB98}') # cor: PaleGreen
-
-          self.botao_jan.move            (10,80)                       #x,y externo
-          self.botao_jan.resize          (230,40)                      #x,y interno
-
-          self.botao_jan.clicked.connect (self.Entrar_Janela_Sistema)
-
-
-     def Entrar_Janela_Sistema          (self):
-          print("ola")
-
-     
+          
     
 
 
