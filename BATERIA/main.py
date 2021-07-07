@@ -38,22 +38,22 @@ from main_nivel_bateria    import Nivel_bateria         ## nivel de carga da bat
 class Window  ( Label_fixo, Botao_janela, Temporizador_carga, Estado_carga_bateria, Calculo_ram, 
                Nivel_bateria, QMainWindow ):
 
-     def __init__          (self):
+     def __init__  ( self ):
 
-          super ().__init__()  #metodo construtor
+          super ().__init__()                             #metodo construtor
 
-          self.title  = "MEDIDOR DE BATERIA"            #titulo
+          self.title  = " MEDIDOR DE BATERIA "            #titulo
 
-          self.top    = 1500                            #topo - esquerda para direita
-          self.left   = 200                             #esquerda-cima para baixo
+          self.top    = 1500                              #topo - esquerda para direita
+          self.left   = 200                               #esquerda-cima para baixo
 
-          self.width  = largura                         #largura
-          self.height = altura                          #altura
+          self.width  = largura                           #largura
+          self.height = altura                            #altura
 
-          self.cor_fundo = 'background-color: #A9A9A9'  #cor DarkGray
+          self.cor_fundo = ' background-color: #A9A9A9 '  #cor DarkGray
 
-          self.jan_fixo_larg = largura                  #largura
-          self.jan_fixo_alt  = altura                   #altura
+          self.jan_fixo_larg = largura                    #largura
+          self.jan_fixo_alt  = altura                     #altura
 
           
           ######################################################################
@@ -64,31 +64,30 @@ class Window  ( Label_fixo, Botao_janela, Temporizador_carga, Estado_carga_bater
      ###############################################################################
      ######## execução de janela
 
-     def InitWindow               (self):
+     def InitWindow        ( self ):
 
-          self.setWindowTitle      (self.title)                             # titulo
+          self.setWindowTitle      ( self.title      )                               # titulo
 
-          self.setGeometry         (self.top, self.left, 
-                                            self.width, self.height)             # informações da janela
-          self.setFixedSize        (self.jan_fixo_larg, self.jan_fixo_alt)  # tamanho fixo da janela
+          self.setGeometry         ( self.top, self.left, self.width, self.height )  # informações da janela
+          self.setFixedSize        ( self.jan_fixo_larg, self.jan_fixo_alt        )  # tamanho fixo da janela
 
-          self.setStyleSheet       ( self.cor_fundo)                        #cor de fundo
+          self.setStyleSheet       ( self.cor_fundo )                                #cor de fundo
 
           ##################################################################################
           #@@@@@@@@função sistema
          
-          self.show                     ()
+          self.show                 ()
 
 
 ########################################################################################
 ############################ execução interna janela
 
-def main               ():
+def main                ():
           
-     App = QApplication (sys.argv)
-     window = Window    ()
+     App = QApplication   ( sys.argv )
+     window = Window      ()
 
-     sys.exit           (App.exec_ ( ))
+     sys.exit             ( App.exec_ ( ) )
 
 if __name__ == "__main__":
 
