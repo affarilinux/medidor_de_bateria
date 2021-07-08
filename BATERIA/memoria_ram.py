@@ -1,14 +1,6 @@
-import psutil 
+from main_loop   import 
 
-# (####main.py####)
 
-# - janela principal
-
-# puxa os dado do sistema operacional
-
-informacao = psutil.virtual_memory()
-
-# puxa as iformações e adiciona nas variaveis
 total  = informacao.total
 usada  = informacao.active
 
