@@ -10,6 +10,8 @@ import  sys
 
 from PyQt5.QtWidgets     import ( QApplication, QMainWindow )
 
+from PyQt5.QtGui         import QIcon
+
 #######################################################################
 ### arquivos.py do sistema
 
@@ -31,29 +33,30 @@ from main_calculo_ram      import Calculo_ram           ## calculo de porcentage
 from main_nivel_bateria    import Nivel_bateria         ## nivel de carga da bateria
 
 
-
 #######################################################################################################
 # inicio janela
 
 class Window  ( Label_fixo, Botao_janela, Temporizador_carga, Estado_carga_bateria, Calculo_ram, 
                Nivel_bateria, QMainWindow ):
 
-     def __init__  ( self ):
+     def __init__          ( self ):
 
-          super ().__init__()                             #metodo construtor
+          super ().__init__()                                    #metodo construtor
 
-          self.title  = " MEDIDOR DE BATERIA "            #titulo
+          self.title         = " MEDIDOR DE BATERIA "            #titulo
 
-          self.top    = 1500                              #topo - esquerda para direita
-          self.left   = 200                               #esquerda-cima para baixo
+          self.top           = 1500                              #topo - esquerda para direita
+          self.left          = 200                               #esquerda-cima para baixo
 
-          self.width  = largura                           #largura
-          self.height = altura                            #altura
+          self.width         = largura                           #largura
+          self.height        = altura                            #altura
 
-          self.cor_fundo = ' background-color: #A9A9A9 '  #cor DarkGray
+          self.cor_fundo     = ' background-color: #A9A9A9 '     #cor DarkGray
 
-          self.jan_fixo_larg = largura                    #largura
-          self.jan_fixo_alt  = altura                     #altura
+          self.jan_fixo_larg = largura                           #largura
+          self.jan_fixo_alt  = altura                            #altura
+
+          self.ico           = QIcon("carregador.png")
 
           
           ######################################################################
@@ -72,6 +75,8 @@ class Window  ( Label_fixo, Botao_janela, Temporizador_carga, Estado_carga_bater
           self.setFixedSize        ( self.jan_fixo_larg, self.jan_fixo_alt        )  # tamanho fixo da janela
 
           self.setStyleSheet       ( self.cor_fundo )                                #cor de fundo
+
+          self.setWindowIcon(self.ico)
 
           ##################################################################################
           #@@@@@@@@função sistema
