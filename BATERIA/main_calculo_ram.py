@@ -50,17 +50,17 @@ class Calculo_ram ( QMainWindow ):
     def inwi ( self ):
 
         #informações da meoria ram
-        self.informacao = psutil.virtual_memory ()
+        self.informacao           = psutil.virtual_memory ()
 
         # puxa as iformações e adiciona nas variaveis
-        self.total  = self.informacao.total
-        self.usada  = self.informacao.active
+        self.total                = self.informacao.total
+        self.usada                = self.informacao.active
 
         #calcula porcentagm
         self.calculo_por_centagem = ( self.usada * 100 ) / self.total
 
         #filtra o float
-        self.cal = round ( self.calculo_por_centagem, 2 )
+        self.cal                  = round ( self.calculo_por_centagem, 2 )
 
     ##################################################################
     #apresentação label do sistema

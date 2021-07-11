@@ -9,12 +9,19 @@ import  sys
 
 from PyQt5.QtWidgets     import ( QApplication, QMainWindow, QLabel )
 
+############################################################################
+##arquivos.py sistema app
+
+from config_main         import por_centagem_label
+
 
 class Label_fixo ( QMainWindow ):
 
      def __init__            ( self ):
 
           super ().__init__  ()                #metodo construtor
+
+          #self.pc_ext = por_centagem_label
 
           #############################################################################
           #############################################################################
@@ -58,7 +65,7 @@ class Label_fixo ( QMainWindow ):
           
           self.label_porct_ram  = QLabel      ( self )
 
-          self.label_porct_ram.setText        ( "%"  )
+          self.label_porct_ram.setText        ( por_centagem_label )
 
           self.label_porct_ram.setStyleSheet  ( ' QLabel { font: bold; font-size:25px; background-color: #00BFFF} ' ) # cor: Wheat
 
@@ -81,7 +88,7 @@ class Label_fixo ( QMainWindow ):
           
           self.label_porcentagem_1  = QLabel        ( self )
 
-          self.label_porcentagem_1.setText          ( "%"  )
+          self.label_porcentagem_1.setText          ( por_centagem_label  )
 
           self.label_porcentagem_1.setStyleSheet    ( ' QLabel { font: bold; font-size:35px; background-color: #00FF00} ' ) #cor Line
 

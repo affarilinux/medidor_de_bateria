@@ -22,9 +22,9 @@ class Estado_carga_bateria (QMainWindow):
 
           self.Estado_Bateria_Atual ()
 
-          self.dados_estado     =  informacao_carregamento
+          self.dados_estado      =  informacao_carregamento
 
-          if self.dados_estado  == True :
+          if self.dados_estado   == True :
 
                self.Estado_True_Carregamento  ()
 

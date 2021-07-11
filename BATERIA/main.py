@@ -15,7 +15,7 @@ from PyQt5.QtGui         import QIcon
 #######################################################################
 ### arquivos.py do sistema
 
-from tamanho_janela      import largura, altura
+from config_main      import largura, altura
 
 ######################################################################3###########
 ### arquivos.py da janela
