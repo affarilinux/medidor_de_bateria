@@ -27,6 +27,7 @@ class Botao_janela ( QMainWindow ):
           self.botao_jan.move            ( 10,80    )       #x,y externo
           self.botao_jan.resize          ( 230,40   )       #x,y interno
 
+          
           self.botao_jan.clicked.connect ( self.Entrar_Janela_Sistema )
 
 

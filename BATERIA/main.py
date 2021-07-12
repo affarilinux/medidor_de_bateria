@@ -8,7 +8,7 @@ import  sys
 
      ###################################################################################
 
-from PyQt5.QtWidgets     import ( QApplication, QMainWindow )
+from PyQt5.QtWidgets     import ( QApplication, QMainWindow, QPushButton )
 
 from PyQt5.QtGui         import QIcon
 
@@ -22,8 +22,6 @@ from config_main      import largura, altura
 
 from main_variavel_fixa    import Label_fixo            ## variaveis fixas
 
-from main_botao            import Botao_janela          ## botao da janela
-
 from main_tempo            import Temporizador_carga    ## relogio de tempo de carga
 
 from main_estado_bateria   import Estado_carga_bateria  ## carregando ou descarregando True/False
@@ -33,10 +31,12 @@ from main_calculo_ram      import Calculo_ram           ## calculo de porcentage
 from main_nivel_bateria    import Nivel_bateria         ## nivel de carga da bateria
 
 
+
+
 #######################################################################################################
 # inicio janela
 
-class Window  ( Label_fixo, Botao_janela, Temporizador_carga, Estado_carga_bateria, Calculo_ram, 
+class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ram, 
                Nivel_bateria, QMainWindow ):
 
      def __init__          ( self ):
@@ -80,17 +80,48 @@ class Window  ( Label_fixo, Botao_janela, Temporizador_carga, Estado_carga_bater
 
           ##################################################################################
           #@@@@@@@@função sistema
+
+          self.Janela_a_Botao()
          
-          self.show                 ()
+          #self.show                 ()
+
+     def Janela_a_Botao(self):
+
+          self.botao_jan  = QPushButton  ( self     )
+
+          self.botao_jan.setText         ( "CONFIGURAÇÕES" )
+
+          self.botao_jan.setStyleSheet   ( ' QPushButton { font: bold; font-size:25px; background-color: #98FB98 } ' ) # cor: PaleGreen
+
+          self.botao_jan.move            ( 10,80    )       #x,y externo
+          self.botao_jan.resize          ( 230,40   )       #x,y interno
 
 
+          self.botao_jan.clicked.connect ( self.Entrar_Janela_Sistema )
+
+
+     def Entrar_Janela_Sistema      (self):
+
+          print("ola")
 ########################################################################################
 ############################ execução interna janela
+
+class controlador:
+
+     def __init__ (self):
+
+          self.Show_Login()
+
+     def Show_Login (self):
+
+          self.Login = Window()
+          self.Login.show()
+
 
 def main                ():
           
      App = QApplication   ( sys.argv )
-     window = Window      ()
+     window = controlador      ()
 
      sys.exit             ( App.exec_ ( ) )
 
