@@ -8,16 +8,21 @@ import  sys
 
      ###################################################################################
 
-from PyQt5.QtWidgets     import ( QApplication, QMainWindow, QPushButton )
+from PyQt5.QtWidgets        import ( QApplication, QMainWindow, QPushButton )
 
-from PyQt5.QtGui         import QIcon
+from PyQt5.QtGui            import QIcon
 
-from PyQt5.QtCore import pyqtSlot, QObject, pyqtSignal
+from PyQt5.QtCore           import pyqtSlot, QObject, pyqtSignal
 
-#######################################################################
-### arquivos.py do sistema
+##################################################################################
+### configurações da janela principal.
 
-from config_main      import largura, altura, Titulo
+from config_main            import largura, altura, Titulo
+
+##################################################################################
+### configurações da janela secundaria
+
+from JANELA_SECUNDARIA.config_sec      import LARGURA_sec_principal, ALTURA_sec_principal
 
 ######################################################################3###########
 ### arquivos.py da janela
@@ -46,13 +51,13 @@ class Janela_segunda (QMainWindow):
           self.top_2     = 500
           self.left_2    = 200
 
-          self.width_2   = 200
-          self.height_2  = 200
+          self.width_2   = LARGURA_sec_principal
+          self.height_2  = ALTURA_sec_principal
 
           self.cor_fundo_2 = ' background-color: #A9A9A9 '     #cor DarkGray
 
-          self.jan_fixo_larg_2 = largura                           #largura
-          self.jan_fixo_alt_2  = altura                            #altura
+          self.jan_fixo_larg_2 = LARGURA_sec_principal                           #largura
+          self.jan_fixo_alt_2  = ALTURA_sec_principal                            #altura
 
           self.ico_2           = QIcon("carregador.png")
 
@@ -137,8 +142,6 @@ class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ra
 
      
      def Entrar_Janela_Sistema      (self):
-
-          print("ola")
 
           self.sinais_jan_1.sinal1.emit()
           self.sinais_jan_1.sinal1.disconnect()
