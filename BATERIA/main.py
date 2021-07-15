@@ -1,10 +1,11 @@
 #comentario # '''
 #python3 xxxx.py
-
+#resource
 ####################################################################
 ### bibliotecas do sistema de python
 
 import  sys
+#sys.path.append('/home/waghtom/Downloads/CTRL-C/envs/med_bateria/BATERIA/IMAGEM_SISTEMA/bat.png')
 
      ###################################################################################
 
@@ -18,12 +19,15 @@ from PyQt5.QtCore           import pyqtSlot, QObject, pyqtSignal
 ##################################################################################
 ### configurações da janela principal.
 
-from config_main            import largura, altura, Titulo, QIcon_janelas, cor_DarkGray
+from config_main            import largura, altura 
 
 ##################################################################################
-### configurações da janela secundaria
+# configurações da janela
 
+###  JANELA_SEGURANÇA
 from JANELA_SECUNDARIA.config_sec      import LARGURA_sec_principal, ALTURA_sec_principal
+
+from config_multi_janelas    import Qicone_barra_de_tarefa, Titulo, cor_DarkGray
 
 ######################################################################3###########
 ### arquivos.py da janela
@@ -44,7 +48,7 @@ from main_nivel_bateria    import Nivel_bateria         ## nivel de carga da bat
 
 class Sinais(QObject):
 
-     sinal1 = pyqtSignal ( name = " janelaprincipal " )
+     sinal1 = pyqtSignal ( name = "Janelaprincipal" ) # entre aspa não pode ficar afastado se não da erro 
 
 ##################################################################################################
 ###################################################################################################
@@ -75,7 +79,7 @@ class Janela_segunda ( QMainWindow ):
 
           self.setStyleSheet       ( cor_DarkGray          )                        # cor de fundo
 
-          self.setWindowIcon       ( QIcon ( QIcon_janelas ) )                      # icone da barra de tarefa
+          self.setWindowIcon       ( QIcon ( Qicone_barra_de_tarefa ) )                      # icone da barra de tarefa
 
 #######################################################################################################
 #######################################################################################################
@@ -90,6 +94,8 @@ class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ra
 
           self.top           = 1500                              # topo - esquerda para direita
           self.left          = 200                               # esquerda-cima para baixo
+
+          #self.gh = Qicone
           
           ######################################################################
           #@@@@@@@@@@@@@@@@@@ chamar função
@@ -108,7 +114,7 @@ class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ra
 
           self.setStyleSheet       ( cor_DarkGray          )       #cor de fundo
 
-          self.setWindowIcon       ( QIcon ( QIcon_janelas ) )     # icone da barra de tarefa
+          self.setWindowIcon       ( QIcon (Qicone_barra_de_tarefa ) )     # icone da barra de tarefa
 
           ##################################################################################
           ###@@@@@@@@ função sistema
