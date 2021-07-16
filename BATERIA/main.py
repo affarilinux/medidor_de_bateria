@@ -19,28 +19,31 @@ from PyQt5.QtCore           import pyqtSlot, QObject, pyqtSignal
 ##################################################################################
 ### configurações da janela principal.
 
-from CONFIGURACOES.config_main            import largura, altura 
+from CONFIGURACOES.config_main      import largura, altura 
 
 ##################################################################################
-# configurações da janela
+# configurações da janela SECUNDARIA
 
 ###  JANELA_SEGURANÇA
-from JANELA_SECUNDARIA.config_sec      import LARGURA_sec_principal, ALTURA_sec_principal
+from CONFIGURACOES.config_sec       import LARGURA_sec_principal, ALTURA_sec_principal
 
-from config_multi_janelas    import Qicone_barra_de_tarefa, Titulo, cor_DarkGray
+#####################################################################################
+# multi janela
+
+from config_multi_janelas           import Qicone_barra_de_tarefa, Titulo, cor_DarkGray
 
 ######################################################################3###########
 ### arquivos.py da janela principal
 
-from main_variavel_fixa    import Label_fixo            ## variaveis fixas
+from JANELA.JANELA_PRINCIPAL.main_variavel_fixa    import Label_fixo            ## variaveis fixas
 
-from main_tempo            import Temporizador_carga    ## relogio de tempo de carga
+from JANELA.JANELA_PRINCIPAL.main_tempo            import Temporizador_carga    ## relogio de tempo de carga
 
-from main_estado_bateria   import Estado_carga_bateria  ## carregando ou descarregando True/False
+from JANELA.JANELA_PRINCIPAL.main_estado_bateria   import Estado_carga_bateria  ## carregando ou descarregando True/False
 
-from main_calculo_ram      import Calculo_ram           ## calculo de porcentagem ram
+from JANELA.JANELA_PRINCIPAL.main_calculo_ram      import Calculo_ram           ## calculo de porcentagem ram
 
-from main_nivel_bateria    import Nivel_bateria         ## nivel de carga da bateria
+from JANELA.JANELA_PRINCIPAL.main_nivel_bateria    import Nivel_bateria         ## nivel de carga da bateria
 
 
 ###########################################################################################

@@ -12,7 +12,7 @@ from PyQt5.QtWidgets     import ( QApplication, QMainWindow, QLabel )
 ############################################################################
 ##arquivos.py sistema app
 
-from informacao_bateria  import informacao_carregamento
+from .informacao_bateria  import informacao_carregamento
 
 class Estado_carga_bateria (QMainWindow):
 
