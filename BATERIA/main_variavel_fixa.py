@@ -12,7 +12,7 @@ from PyQt5.QtWidgets     import ( QApplication, QMainWindow, QLabel )
 ############################################################################
 ##arquivos.py sistema app
 
-from config_main         import por_centagem_label
+from CONFIGURACOES.config_main         import por_centagem_label
 
 
 class Label_fixo ( QMainWindow ):

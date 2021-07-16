@@ -19,7 +19,7 @@ from PyQt5.QtCore           import pyqtSlot, QObject, pyqtSignal
 ##################################################################################
 ### configurações da janela principal.
 
-from config_main            import largura, altura 
+from CONFIGURACOES.config_main            import largura, altura 
 
 ##################################################################################
 # configurações da janela
@@ -30,7 +30,7 @@ from JANELA_SECUNDARIA.config_sec      import LARGURA_sec_principal, ALTURA_sec_
 from config_multi_janelas    import Qicone_barra_de_tarefa, Titulo, cor_DarkGray
 
 ######################################################################3###########
-### arquivos.py da janela
+### arquivos.py da janela principal
 
 from main_variavel_fixa    import Label_fixo            ## variaveis fixas
 
