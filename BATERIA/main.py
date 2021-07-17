@@ -45,6 +45,12 @@ from JANELA.JANELA_PRINCIPAL.main_calculo_ram      import Calculo_ram           
 
 from JANELA.JANELA_PRINCIPAL.main_nivel_bateria    import Nivel_bateria         ## nivel de carga da bateria
 
+#############################################################################################################
+### arquivos.py da janela secundaria
+
+from JANELA.JANELA_SECUNDARIA.sec_variavel_fixa    import SEc_fixo
+
+
 
 ###########################################################################################
 ### sinais do sistema
@@ -53,14 +59,17 @@ class Sinais(QObject):
 
      sinal1 = pyqtSignal ( name = "Janelaprincipal" ) # entre aspa não pode ficar afastado se não da erro 
 
+
+
+
 ##################################################################################################
 ###################################################################################################
 ### janela secundaria
-class Janela_segunda ( QMainWindow ):
+class Janela_segunda ( SEc_fixo,QMainWindow ):
 
      def __init__          ( self ):
 
-          super ().__init__ ()                                                      # metodo construtor
+          super ().__init__ ()                                                     # metodo construtor
 
           self.top_2     = 500                                                     # topo - esquerda para direita
           self.left_2    = 200                                                     # esquerda-cima para baixo
@@ -75,14 +84,42 @@ class Janela_segunda ( QMainWindow ):
 
      def Init_janela ( self ):
 
-          self.setWindowTitle      ( Titulo                )                         # titulo
+          self.setWindowTitle      ( Titulo        )                        # titulo
 
           self.setGeometry         ( self.top_2, self.left_2, LARGURA_sec_principal, ALTURA_sec_principal )  # informações da janela
           self.setFixedSize        ( LARGURA_sec_principal, ALTURA_sec_principal )  # tamanho fixo da janela
 
-          self.setStyleSheet       ( cor_DarkGray          )                        # cor de fundo
+          self.setStyleSheet       ( cor_DarkGray  )                        # cor de fundo
 
-          self.setWindowIcon       ( QIcon ( Qicone_barra_de_tarefa ) )                      # icone da barra de tarefa
+          self.setWindowIcon       ( QIcon ( Qicone_barra_de_tarefa ) )     # icone da barra de tarefa
+
+          ##################################################################################
+          ###@@@@@@@@ função sistema
+
+          # chamadado botao da janela
+          self.Janela_Buton_Voltar_Principal()
+
+     ##########################################################################################
+     ### botao
+
+     def Janela_Buton_Voltar_Principal (self):
+
+          self.BUTON_jan_sec_voltar  = QPushButton  ( self     )
+
+          self.BUTON_jan_sec_voltar.setText         ( "JANELA PRINCIPAL" )
+
+          self.BUTON_jan_sec_voltar.setStyleSheet   ( ' QPushButton { font: bold; font-size:25px; background-color: #98FB98 } ' ) # cor: PaleGreen
+
+          self.BUTON_jan_sec_voltar.move            ( 630, 15  )       #x,y externo
+          self.BUTON_jan_sec_voltar.resize          ( 250, 45  )       #x,y interno
+
+          self.BUTON_jan_sec_voltar.clicked.connect ( self.Entrar_Janela_Principal )
+
+     def Entrar_Janela_Principal(self):
+
+          print("ola")
+
+
 
 #######################################################################################################
 #######################################################################################################
@@ -97,8 +134,6 @@ class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ra
 
           self.top           = 1500                              # topo - esquerda para direita
           self.left          = 200                               # esquerda-cima para baixo
-
-          #self.gh = Qicone
           
           ######################################################################
           #@@@@@@@@@@@@@@@@@@ chamar função
@@ -110,14 +145,14 @@ class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ra
 
      def InitWindow        ( self ):
 
-          self.setWindowTitle      ( Titulo                )       # titulo
+          self.setWindowTitle      ( Titulo          )                    # titulo
 
           self.setGeometry         ( self.top, self.left, largura, altura )  # informações da janela
-          self.setFixedSize        ( largura, altura       )       # tamanho fixo da janela
+          self.setFixedSize        ( largura, altura )                    # tamanho fixo da janela
 
-          self.setStyleSheet       ( cor_DarkGray          )       #cor de fundo
+          self.setStyleSheet       ( cor_DarkGray    )                    #cor de fundo
 
-          self.setWindowIcon       ( QIcon (Qicone_barra_de_tarefa ) )     # icone da barra de tarefa
+          self.setWindowIcon       ( QIcon (Qicone_barra_de_tarefa ) )    # icone da barra de tarefa
 
           ##################################################################################
           ###@@@@@@@@ função sistema
@@ -130,6 +165,7 @@ class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ra
          
      ##########################################################################################
      ### botao
+
      def Janela_a_Botao(self):
 
           self.botao_jan  = QPushButton  ( self     )
@@ -138,7 +174,7 @@ class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ra
 
           self.botao_jan.setStyleSheet   ( ' QPushButton { font: bold; font-size:25px; background-color: #98FB98 } ' ) # cor: PaleGreen
 
-          self.botao_jan.move            ( 10, 80   )       #x,y externo
+          self.botao_jan.move            ( 10 , 80  )       #x,y externo
           self.botao_jan.resize          ( 230, 40  )       #x,y interno
 
 
@@ -151,6 +187,9 @@ class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ra
           self.sinais_jan_1.sinal1.emit       () # chamar janela secundaria
           self.sinais_jan_1.sinal1.disconnect () # disconectar o sinal de abrir janela
      
+
+
+
 ########################################################################################
 ########################################################################################
 ############################ execução interna janela
@@ -177,6 +216,8 @@ class controlador:
           self.tela_2 = Janela_segunda ()         # chamar janela principal
 
           self.tela_2.show             ()         # abrir janela principal
+
+
 
 #######################################################################
 #######################################################################
