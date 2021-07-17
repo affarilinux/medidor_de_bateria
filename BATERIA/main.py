@@ -54,12 +54,15 @@ from JANELA.JANELA_SECUNDARIA.sec_variavel_fixa    import SEc_fixo
 
 ###########################################################################################
 ### sinais do sistema
+class Sinal_Sec (QObject):
 
-class Sinais(QObject):
+     sinal_volta_tela = pyqtSignal ( name = "janelasecundaria" )
 
-     sinal1 = pyqtSignal ( name = "Janelaprincipal" ) # entre aspa não pode ficar afastado se não da erro 
+class Sinais ( QObject ):
 
+     sinal1           = pyqtSignal ( name = "Janelaprincipal"  ) # entre aspa não pode ficar afastado se não da erro 
 
+     
 
 
 ##################################################################################################
@@ -96,6 +99,9 @@ class Janela_segunda ( SEc_fixo,QMainWindow ):
           ##################################################################################
           ###@@@@@@@@ função sistema
 
+          # chamada do sinal da janela
+          self.sinal_jan_secundaria = Sinal_Sec ()
+
           # chamadado botao da janela
           self.Janela_Buton_Voltar_Principal()
 
@@ -118,6 +124,9 @@ class Janela_segunda ( SEc_fixo,QMainWindow ):
      def Entrar_Janela_Principal(self):
 
           print("ola")
+
+          self.sinal_jan_secundaria.sinal_volta_tela.emit       () # chamar janela secundaria
+          self.sinal_jan_secundaria.sinal_volta_tela.disconnect () # disconectar o sinal de abrir janela
 
 
 
@@ -158,7 +167,7 @@ class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ra
           ###@@@@@@@@ função sistema
 
           # chamada do sinal da janela
-          self.sinais_jan_1 = Sinais ()
+          self.sinal_jan_1 = Sinais ()
 
           # chamadado botao da janela
           self.Janela_a_Botao        ()
@@ -184,8 +193,8 @@ class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ra
      def Entrar_Janela_Sistema       ( self ):
 
           #sela.Loguin - class controlador
-          self.sinais_jan_1.sinal1.emit       () # chamar janela secundaria
-          self.sinais_jan_1.sinal1.disconnect () # disconectar o sinal de abrir janela
+          self.sinal_jan_1.sinal1.emit       () # chamar janela secundaria
+          self.sinal_jan_1.sinal1.disconnect () # disconectar o sinal de abrir janela
      
 
 
@@ -206,16 +215,26 @@ class controlador:
 
           self.Login = Window                    ()              # chamar janela principal
 
-          self.Login.sinais_jan_1.sinal1.connect ( self.Show_2 ) # chamada de sinal- class Sinais
+          self.Login.sinal_jan_1.sinal1.connect ( self.Show_2 ) # chamada de sinal- class Sinais
 
           self.Login.show                        ()              # abrir janela principal
 
+          self.tela_2.close()
+
      #janela secundaria
+     @pyqtSlot ()
      def Show_2 ( self ):
+
+          self.Login.close()
 
           self.tela_2 = Janela_segunda ()         # chamar janela principal
 
+
+          self.tela_2.sinal_jan_secundaria.sinal_volta_tela.connect ( self.Show_Login )
+
           self.tela_2.show             ()         # abrir janela principal
+
+          
 
 
 
