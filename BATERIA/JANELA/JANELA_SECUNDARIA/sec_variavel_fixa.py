@@ -1,25 +1,32 @@
 ## variaveis labels fixas da janelas secundaria main.py- janela_segunda
 
-########################################################################
+##################################################
 ## bibliotecas do sistema de python
 
 import  sys
 
-     ######################################################################
+     #############################################
 
 from PyQt5.QtWidgets     import ( QApplication, QMainWindow, QLabel )
+from CONFIGURACOES.config_sec import LARGURA_2
 
-from CONFIGURACOES.config_sec import LARGURA_sec_principal
 
-class SEc_fixo (QMainWindow):
+class  Janela2Fixa( QMainWindow ):
 
-    def __init__ (self):
+    def __init__( self ):
 
-        super ().__init__  () 
+        super ().__init__() # metodo construtor
 
-        self.label_temp_uso  = QLabel     ( self     )
+        ##########################################
+        ###BARRA DE MENUS JANELA 2
+        
+        self.LABEL_menus_janela2  = QLabel     ( self )
 
-        self.label_temp_uso.setStyleSheet ( 'QLabel{ background-color: #4169E1} ' ) # cor: RoyalBlue
+        # cor: RoyalBlue
+        self.LABEL_menus_janela2.setStyleSheet ( 
+            'QLabel{ background-color: #4169E1}' ) 
 
-        self.label_temp_uso.move          ( 0,5  )                      # x,y externo
-        self.label_temp_uso.resize        ( LARGURA_sec_principal,60 )  # x,y interno
+         # x,y externo
+        self.LABEL_menus_janela2.move          ( 0, 5  )                     
+        # x,y interno
+        self.LABEL_menus_janela2.resize        ( LARGURA_2, 60 )  

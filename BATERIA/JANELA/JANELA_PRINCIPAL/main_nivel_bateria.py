@@ -1,68 +1,74 @@
 ## variaveis label janela  principal temporizador main.py
 
-##########################################################################
+##################################################
 ## bibliotecas do sistema de python
 
 import  sys
 
 import psutil
 
-    ########################################################################
+    ##############################################
 
 from PyQt5.QtWidgets     import ( QApplication, QMainWindow, QLabel )
 
 from PyQt5.QtCore        import QTimer
 
 
-class Nivel_bateria       (QMainWindow):
+class janela1NivelBateria( QMainWindow ):
 
-    def __init__          ( self ):
+    def __init__( self ):
 
-        super ().__init__ ()  #metodo construtor
+        super ().__init__()  #metodo construtor
 
-        ####################################################
+        ##########################################
         #label
 
-        self.label_num_var  = QLabel          ( self       )
+        self.LABEL_atualizacao_nivel  = QLabel     ( self )
 
-        self.label_num_var.setStyleSheet      ( ' QLabel { font: bold; font-size:30px; background-color: #00FF00} ' ) #cor Line
+        #cor Line
+        self.LABEL_atualizacao_nivel.setStyleSheet ( 
+            'QLabel { font: bold; font-size:30px; background-color: #00FF00}' ) 
 
-        self.label_num_var.move               ( 260,30 )         #x,y externo
-        self.label_num_var.resize             ( 65,35  )         #x,y interno
+        # x,y externo
+        self.LABEL_atualizacao_nivel.move          ( 260, 30 )   
+        # x,y interno     
+        self.LABEL_atualizacao_nivel.resize        ( 65,  35 )         
 
-        ##################################################
+        ##########################################
         # primeira chamada de apresentação label
 
         self.Sistema_Bateria()
 
-        ################################################
+        ##########################################
         #loop
 
-        self.L_bat = QTimer        ( self )
+        self.TIMER_loop_nivel = QTimer        ( self )
 
-        self.L_bat.setInterval     ( 5000 )
-        self.L_bat.start           ()
+        self.TIMER_loop_nivel.setInterval     ( 5000 )
+        self.TIMER_loop_nivel.start           ()
 
-        self.L_bat.timeout.connect ( self.Sistema_Bateria ) #chamada de função
+        #chamada de funçãO
+        self.TIMER_loop_nivel.timeout.connect ( self.Sistema_Bateria ) 
 
     #função chamada interna do sistema operacional
 
-    def Loop_Timer_Bateria(self):
+    def Loop_Timer_Bateria( self ):
 
         #chama os dados para a janela
-        self.Bateria_sis   = psutil.sensors_battery()
+        self.BATERIA_sistema = psutil.sensors_battery()
 
         #chama o tipo de informação
-        self.Nivel_bat     = self.Bateria_sis.percent
+        self.nivel_bateria   = self.BATERIA_sistema.percent
 
         # transforma em int
-        self.ent_Nivel_int = int(self.Nivel_bat)
+        self.entrada_informacao = int(self.nivel_bateria)
 
     # chamada do loop
-    def Sistema_Bateria ( self ):
+    def Sistema_Bateria( self ):
 
         self.Loop_Timer_Bateria()
 
         #string
-        self.medida = str(self.ent_Nivel_int)
-        self.label_num_var.setText            ( self.medida )
+        self.medida = str(self.entrada_informacao)
+        #print para janela
+        self.LABEL_atualizacao_nivel.setText( self.medida )

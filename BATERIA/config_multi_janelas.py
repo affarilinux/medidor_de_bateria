@@ -1,7 +1,7 @@
 #configurações da multijanela
 
-Qicone_barra_de_tarefa = 'IMAGEM_SISTEMA/img_bateria.png'
+QICONE_BARRA_DE_TAREFA = 'IMAGEM_SISTEMA/img_bateria.png'
 
-Titulo                 = " MEDIDOR DE BATERIA " 
+TITULO                 = " MEDIDOR DE BATERIA " 
 
-cor_DarkGray           = ' background-color: #A9A9A9 '
+COR_DARKGRAY           = ' background-color: #A9A9A9 '

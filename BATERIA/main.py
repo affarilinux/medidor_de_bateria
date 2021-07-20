@@ -1,254 +1,287 @@
 #comentario # '''
 #python3 xxxx.py
 #resource
-####################################################################
+
+##################################################
 ### bibliotecas do sistema de python
 
 import  sys
-#sys.path.append('/home/waghtom/Downloads/CTRL-C/envs/med_bateria/BATERIA/IMAGEM_SISTEMA/bat.png')
 
-     ###################################################################################
+    ##############################################
 
-from PyQt5.QtWidgets        import ( QApplication, QMainWindow, QPushButton )
-
-from PyQt5.QtGui            import QIcon
-
-from PyQt5.QtCore           import pyqtSlot, QObject, pyqtSignal
+from PyQt5.QtWidgets  import ( QApplication, QMainWindow, QPushButton )
+from PyQt5.QtGui      import QIcon
+from PyQt5.QtCore     import pyqtSlot, QObject, pyqtSignal
 
 
-##################################################################################
+##################################################
 ### configurações da janela principal.
 
-from CONFIGURACOES.config_main      import largura, altura 
+from CONFIGURACAO.config_main      import LARGURA, ALTURA
 
-##################################################################################
-# configurações da janela SECUNDARIA
+
+##################################################
+### configurações da janela SECUNDARIA
+
 
 ###  JANELA_SEGURANÇA
-from CONFIGURACOES.config_sec       import LARGURA_sec_principal, ALTURA_sec_principal
+from CONFIGURACAO.config_sec       import LARGURA_2, ALTURA_2
 
-#####################################################################################
+
+##################################################
 # multi janela
 
-from config_multi_janelas           import Qicone_barra_de_tarefa, Titulo, cor_DarkGray
+#arquivo.py- Bateria
+from config_multi_janelas           import ( QICONE_BARRA_DE_TAREFA, TITULO, 
+                                             COR_DARKGRAY )
 
-######################################################################3###########
+
+##################################################
 ### arquivos.py da janela principal
 
-from JANELA.JANELA_PRINCIPAL.main_variavel_fixa    import Label_fixo            ## variaveis fixas
+## variaveis fixas
+from JANELA.JANELA_PRINCIPAL.main_variavel_fixa    import Janela1Fixa   
+## relogio de tempo de carga
+from JANELA.JANELA_PRINCIPAL.main_tempo            import ( 
+     jANELA1TemporizadorCarga )
+## carregando ou descarregando True/False
+from JANELA.JANELA_PRINCIPAL.main_estado_bateria   import (
+    Janela1EstadoCargaBateria )
+## calculo de porcentagem ram
+from JANELA.JANELA_PRINCIPAL.main_calculo_ram      import Janela1CalculoRam           
+## nivel de carga da bateria
+from JANELA.JANELA_PRINCIPAL.main_nivel_bateria    import janela1NivelBateria         
 
-from JANELA.JANELA_PRINCIPAL.main_tempo            import Temporizador_carga    ## relogio de tempo de carga
 
-from JANELA.JANELA_PRINCIPAL.main_estado_bateria   import Estado_carga_bateria  ## carregando ou descarregando True/False
-
-from JANELA.JANELA_PRINCIPAL.main_calculo_ram      import Calculo_ram           ## calculo de porcentagem ram
-
-from JANELA.JANELA_PRINCIPAL.main_nivel_bateria    import Nivel_bateria         ## nivel de carga da bateria
-
-#############################################################################################################
+##################################################
 ### arquivos.py da janela secundaria
 
-from JANELA.JANELA_SECUNDARIA.sec_variavel_fixa    import SEc_fixo
+#variaveis fixas
+from JANELA.JANELA_SECUNDARIA.sec_variavel_fixa    import Janela2Fixa
 
 
-
-###########################################################################################
+#-------------------------------------------------
+##################################################
 ### sinais do sistema
-class Sinal_Sec (QObject):
+#class Sinal_Sec (QObject):
 
-     sinal_volta_tela = pyqtSignal ( name = "janelasecundaria" )
+     #sinal_volta_tela = pyqtSignal ( name = "janelasecundaria" )
 
 class Sinais ( QObject ):
 
-     sinal1           = pyqtSignal ( name = "Janelaprincipal"  ) # entre aspa não pode ficar afastado se não da erro 
+    # entre aspa não pode ficar afastado se não da erro
+    # janela pŕincial
+    sinal1 = pyqtSignal( name = "Janelaprincipal"  ) 
 
-     
 
-
-##################################################################################################
-###################################################################################################
+#-------------------------------------------------
+##################################################
 ### janela secundaria
-class Janela_segunda ( SEc_fixo,QMainWindow ):
+class JanelaSegunda ( Janela2Fixa, QMainWindow ):
 
-     def __init__          ( self ):
+    def __init__( self ):
 
-          super ().__init__ ()                                                     # metodo construtor
+        super ().__init__()  # metodo construtor
 
-          self.top_2     = 500                                                     # topo - esquerda para direita
-          self.left_2    = 200                                                     # esquerda-cima para baixo
+        self.TOP_2  = 500    # topo - esquerda para direita
+        self.LEFT_2 = 200    # esquerda-cima para baixo
 
-          ######################################################################
-          ###@@@@@@@@@@@@@@@@@@ chamar função
+        ##########################################
+        ###chamar função
 
-          self.Init_janela ()
+        self.Init_janela()
 
-     ###############################################################################
+
+     #############################################
      ######## execução de janela
 
-     def Init_janela ( self ):
+    def Init_janela( self ):
 
-          self.setWindowTitle      ( Titulo        )                        # titulo
+        # titulo
+        self.setWindowTitle  ( TITULO )                        
 
-          self.setGeometry         ( self.top_2, self.left_2, LARGURA_sec_principal, ALTURA_sec_principal )  # informações da janela
-          self.setFixedSize        ( LARGURA_sec_principal, ALTURA_sec_principal )  # tamanho fixo da janela
+        # informações da janela
+        self.setGeometry     ( self.TOP_2, self.LEFT_2, LARGURA_2, ALTURA_2 )  
+        # tamanho fixo da janela
+        self.setFixedSize    ( LARGURA_2, ALTURA_2 ) 
 
-          self.setStyleSheet       ( cor_DarkGray  )                        # cor de fundo
+        # cor de fundo 
+        self.setStyleSheet   ( COR_DARKGRAY )                        
 
-          self.setWindowIcon       ( QIcon ( Qicone_barra_de_tarefa ) )     # icone da barra de tarefa
+        # icone da barra de tarefa
+        self.setWindowIcon   ( QIcon ( QICONE_BARRA_DE_TAREFA ))     
 
-          ##################################################################################
-          ###@@@@@@@@ função sistema
+        ##########################################
+        ###@@@@@@@@ função sistema
 
-          # chamada do sinal da janela
-          self.sinal_jan_secundaria = Sinal_Sec ()
+        # chamada do sinal da janela
+          #self.sinal_jan_secundaria = Sinal_Sec ()
 
-          # chamadado botao da janela
-          self.Janela_Buton_Voltar_Principal()
-
-     ##########################################################################################
-     ### botao
-
-     def Janela_Buton_Voltar_Principal (self):
-
-          self.BUTON_jan_sec_voltar  = QPushButton  ( self     )
-
-          self.BUTON_jan_sec_voltar.setText         ( "JANELA PRINCIPAL" )
-
-          self.BUTON_jan_sec_voltar.setStyleSheet   ( ' QPushButton { font: bold; font-size:25px; background-color: #98FB98 } ' ) # cor: PaleGreen
-
-          self.BUTON_jan_sec_voltar.move            ( 630, 15  )       #x,y externo
-          self.BUTON_jan_sec_voltar.resize          ( 250, 45  )       #x,y interno
-
-          self.BUTON_jan_sec_voltar.clicked.connect ( self.Entrar_Janela_Principal )
-
-     def Entrar_Janela_Principal(self):
-
-          print("ola")
-
-          self.sinal_jan_secundaria.sinal_volta_tela.emit       () # chamar janela secundaria
-          self.sinal_jan_secundaria.sinal_volta_tela.disconnect () # disconectar o sinal de abrir janela
+        # chamadado botao da janela
+        self.Janela_Buton_Voltar_Principal()
 
 
+    ##############################################
+    ### botao
 
-#######################################################################################################
-#######################################################################################################
+    def Janela_Buton_Voltar_Principal( self ):
+
+        self.BUTON_janela2  = QPushButton  ( self )
+
+        self.BUTON_janela2.setText         ( "JANELA PRINCIPAL" )
+
+        # cor: PaleGreen
+        self.BUTON_janela2.setStyleSheet   ( 
+            'QPushButton { font: bold; font-size:25px; background-color: #98FB98 }' )
+
+        # x,y externo
+        self.BUTON_janela2.move            ( 630, 15 ) 
+        # x,y interno 
+        self.BUTON_janela2.resize          ( 250, 45 )      
+
+        self.BUTON_janela2.clicked.connect ( self.Entrar_Janela_Principal )
+
+
+    def Entrar_Janela_Principal( self ):
+
+        print("ola")
+
+          #self.sinal_jan_secundaria.sinal_volta_tela.emit       () # chamar janela secundaria
+          #self.sinal_jan_secundaria.sinal_volta_tela.disconnect () # disconectar o sinal de abrir janela
+
+
+#-------------------------------------------------
+##################################################
 #### inicio janela
 
-class Window  ( Label_fixo, Temporizador_carga, Estado_carga_bateria, Calculo_ram, 
-               Nivel_bateria, QMainWindow ):
+class Window ( Janela1Fixa, jANELA1TemporizadorCarga, 
+               Janela1EstadoCargaBateria, Janela1CalculoRam, 
+               janela1NivelBateria, QMainWindow ):
 
-     def __init__          ( self ):
+    def __init__( self ):
 
-          super ().__init__ ()                                   # metodo construtor
+        super ().__init__ ()  # metodo construtor
 
-          self.top           = 1500                              # topo - esquerda para direita
-          self.left          = 200                               # esquerda-cima para baixo
+        self.TOP   = 1500     # topo - esquerda para direita
+        self.LEFT  = 200      # esquerda-cima para baixo
           
-          ######################################################################
-          #@@@@@@@@@@@@@@@@@@ chamar função
+        ##########################################
+        #@@ chamar função
 
-          self.InitWindow ()
+        self.InitWindow()
 
-     ###############################################################################
-     ######## execução de janela
+    ##############################################
+    ### execução de janela
 
-     def InitWindow        ( self ):
 
-          self.setWindowTitle      ( Titulo          )                    # titulo
+    def InitWindow( self ):
 
-          self.setGeometry         ( self.top, self.left, largura, altura )  # informações da janela
-          self.setFixedSize        ( largura, altura )                    # tamanho fixo da janela
+         # titulo
+        self.setWindowTitle ( TITULO )                   
 
-          self.setStyleSheet       ( cor_DarkGray    )                    #cor de fundo
+        # informações da janela
+        self.setGeometry    ( self.TOP, self.LEFT, LARGURA, ALTURA )  
+        # tamanho fixo da janela
+        self.setFixedSize   ( LARGURA, ALTURA )                    
 
-          self.setWindowIcon       ( QIcon (Qicone_barra_de_tarefa ) )    # icone da barra de tarefa
+         #cor de fundo
+        self.setStyleSheet  ( COR_DARKGRAY )                   
 
-          ##################################################################################
-          ###@@@@@@@@ função sistema
+        # icone da barra de tarefa
+        self.setWindowIcon  ( QIcon ( QICONE_BARRA_DE_TAREFA ))    
 
-          # chamada do sinal da janela
-          self.sinal_jan_1 = Sinais ()
+        ##########################################
+        ### função sistema
 
-          # chamadado botao da janela
-          self.Janela_a_Botao        ()
+        # chamada do sinal da janela
+        self.sinal_jan_1 = Sinais()
+
+        # chamadado botao da janela
+        self.Janela_a_Botao()
          
-     ##########################################################################################
+
+     #############################################
      ### botao
 
-     def Janela_a_Botao(self):
+    def Janela_a_Botao( self ):
 
-          self.botao_jan  = QPushButton  ( self     )
+        self.BUTON_janela1  = QPushButton  ( self     )
 
-          self.botao_jan.setText         ( "CONFIGURAÇÕES" )
+        self.BUTON_janela1.setText         ( "CONFIGURAÇÕES" )
 
-          self.botao_jan.setStyleSheet   ( ' QPushButton { font: bold; font-size:25px; background-color: #98FB98 } ' ) # cor: PaleGreen
+        # cor: PaleGreen
+        self.BUTON_janela1.setStyleSheet   ( 
+            ' QPushButton { font: bold; font-size:25px; background-color: #98FB98 } ' ) 
 
-          self.botao_jan.move            ( 10 , 80  )       #x,y externo
-          self.botao_jan.resize          ( 230, 40  )       #x,y interno
+        self.BUTON_janela1.move            ( 10,  80  )  #x,y externo
+        self.BUTON_janela1.resize          ( 230, 40  )  #x,y interno
 
 
-          self.botao_jan.clicked.connect ( self.Entrar_Janela_Sistema )
+        self.BUTON_janela1.clicked.connect ( self.Entrar_Janela_Sistema )
+
 
      ###função abrir janela
-     def Entrar_Janela_Sistema       ( self ):
+    def Entrar_Janela_Sistema( self ):
 
-          #sela.Loguin - class controlador
-          self.sinal_jan_1.sinal1.emit       () # chamar janela secundaria
-          self.sinal_jan_1.sinal1.disconnect () # disconectar o sinal de abrir janela
-     
+        #sela.Loguin - class controlador
+        # chamar janela secundaria
+        self.sinal_jan_1.sinal1.emit       () 
+        # disconectar o sinal de abrir janela
+        self.sinal_jan_1.sinal1.disconnect () 
 
 
+#-------------------------------------------------
+##################################################
+### execução interna janela
 
-########################################################################################
-########################################################################################
-############################ execução interna janela
+class Controlador:
 
-class controlador:
+    def __init__( self ):
 
-     def __init__ ( self ):
+        self.Show_Login()
 
-          self.Show_Login ()
 
      #janela principal
-     @pyqtSlot ()                                # decoreto
-     def Show_Login ( self ):
+    @pyqtSlot()                 # decoreto
+    def Show_Login( self ):
 
-          self.Login = Window                    ()              # chamar janela principal
+        # chamar janela principal
+        self.Login = Window()   
+        # chamada de sinal- class Sinais
+        self.Login.sinal_jan_1.sinal1.connect ( self.Show_2 ) 
+        # abrir janela principal
+        self.Login.show()       
 
-          self.Login.sinal_jan_1.sinal1.connect ( self.Show_2 ) # chamada de sinal- class Sinais
+        #self.tela_2.close()
 
-          self.Login.show                        ()              # abrir janela principal
-
-          self.tela_2.close()
 
      #janela secundaria
-     @pyqtSlot ()
-     def Show_2 ( self ):
+     #@pyqtSlot ()
+    def Show_2( self ):
 
-          self.Login.close()
+          #self.Login.close()
+        # chamar janela principal
+        self.tela_2 = JanelaSegunda()         
 
-          self.tela_2 = Janela_segunda ()         # chamar janela principal
 
-
-          self.tela_2.sinal_jan_secundaria.sinal_volta_tela.connect ( self.Show_Login )
-
-          self.tela_2.show             ()         # abrir janela principal
+          #self.tela_2.sinal_jan_secundaria.sinal_volta_tela.connect ( self.Show_Login )
+        # abrir janela principal
+        self.tela_2.show()                     
 
           
-
-
-
-#######################################################################
-#######################################################################
+#-------------------------------------------------
+##################################################
 ###execução main da janela
 
-def main                ():
+def main():
           
-     App = QApplication   ( sys.argv )
-     window = controlador ()
+    App    = QApplication ( sys.argv )
 
-     sys.exit             ( App.exec_ ( ) )
+    window = Controlador  ()
+
+    sys.exit              ( App.exec_ ( ) )
+
 
 if __name__ == "__main__":
 
-     main ()
+    main ()

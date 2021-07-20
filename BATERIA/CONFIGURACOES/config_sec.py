@@ -4,5 +4,5 @@
 
 ''' tamanho da janela secundaria'''
 
-LARGURA_sec_principal = 900
-ALTURA_sec_principal  = 700
+LARGURA_2 = 900
+ALTURA_2  = 700
