@@ -3,6 +3,7 @@
 
 import  sys
 import psutil
+import sqlite3
 
     ##############################################
 
@@ -20,6 +21,13 @@ from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
 from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
     VERTICAL_CENTER_1X , HORIZONTAL_2Y 
 )
+
+##################################################
+# banco de dados
+from config_multi_janelas  import BANCO_INTERNO_SQLITE3
+
+
+
 class janela1NivelFrequenciaProcessador( QMainWindow ):
 
     def __init__( self ):
@@ -43,6 +51,15 @@ class janela1NivelFrequenciaProcessador( QMainWindow ):
             HORIZONTAL_2Y
         )     
 
+
+        self.processador_conexao = sqlite3.connect ( BANCO_INTERNO_SQLITE3 )
+        self.cursor              = self.processador_conexao.cursor()
+
+        self.cursor.execute (
+            '''CREATE TABLE if not exists MONTANTE_PROCESSADOR( id integer primary key,
+                                                 QUANTIDADE REAL                                      
+                                                )'''
+        )
         ##########################################
         # primeira chamada de apresentação label
 
@@ -53,13 +70,14 @@ class janela1NivelFrequenciaProcessador( QMainWindow ):
 
         self.TIMER_loop_processador = QTimer        ( self )
 
-        self.TIMER_loop_processador.setInterval     ( 5000 )
+        self.TIMER_loop_processador.setInterval     ( 1000 )
         self.TIMER_loop_processador.start           ()
 
         #chamada de funçãO
         self.TIMER_loop_processador.timeout.connect ( 
             self.Print_Informacoes_Loop 
         ) 
+
 
     def Psutil_Chamada ( self ):
 
@@ -76,6 +94,10 @@ class janela1NivelFrequenciaProcessador( QMainWindow ):
         # filtra o float
         self.filtra_calculo_sistema = round ( self.calculo_processos_dados, 2 )
 
+        ##########################################
+        # banco de dados
+
+        
 
     ##############################################
     #apresentação label do sistema
@@ -83,8 +105,19 @@ class janela1NivelFrequenciaProcessador( QMainWindow ):
     def Print_Informacoes_Loop ( self ):
 
         self.Psutil_Chamada ()
+        
 
         # transforma em string a informação float
         self.string_para_print = str ( self.filtra_calculo_sistema) 
         # apresentação
         self.LABEL_nivel_processador_center.setText( self.string_para_print )
+        self.banco()
+
+    
+    def banco(self):
+
+        self.cursor.execute( 'INSERT INTO MONTANTE_PROCESSADOR(QUANTIDADE) VALUES(?)', (self.string_para_print,))
+
+        self.processador_conexao.commit()
+        #cursor.close()
+        #processador_conexao.close()
