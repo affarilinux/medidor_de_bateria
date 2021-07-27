@@ -10,15 +10,25 @@ import psutil
     ##############################################
 
 from PyQt5.QtWidgets     import ( QApplication, QMainWindow, QLabel )
-
 from PyQt5.QtCore        import QTimer
 
+##################################################
+# arquivo.py
+
+# externo
+from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
+    VERTICAL_DIREITA_1X, ENTRY_VERTICAL_1Y
+)
+#interno
+from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
+    ENTRY_HORIZONTAL_1X
+)
 
 class janela1NivelBateria( QMainWindow ):
 
     def __init__( self ):
 
-        super ().__init__()  #metodo construtor
+        super ().__init__()    # metodo construtor
 
         ##########################################
         #label
@@ -27,12 +37,17 @@ class janela1NivelBateria( QMainWindow ):
 
         #cor Line
         self.LABEL_atualizacao_nivel.setStyleSheet ( 
-            'QLabel { font: bold; font-size:30px; background-color: #00FF00}' ) 
+            'QLabel { font: bold; font-size:30px; background-color: #00FF00}' 
+        ) 
 
         # x,y externo
-        self.LABEL_atualizacao_nivel.move          ( 260, 30 )   
+        self.LABEL_atualizacao_nivel.move          ( VERTICAL_DIREITA_1X, 
+            ENTRY_VERTICAL_1Y
+        )   
         # x,y interno     
-        self.LABEL_atualizacao_nivel.resize        ( 65,  35 )         
+        self.LABEL_atualizacao_nivel.resize        ( ENTRY_HORIZONTAL_1X,  
+            ENTRY_VERTICAL_1Y 
+        )         
 
         ##########################################
         # primeira chamada de apresentação label
@@ -54,10 +69,10 @@ class janela1NivelBateria( QMainWindow ):
 
     def Loop_Timer_Bateria( self ):
 
-        #chama os dados para a janela
+        # chama os dados para a janela
         self.BATERIA_sistema = psutil.sensors_battery()
 
-        #chama o tipo de informação
+        # chama o tipo de informação
         self.nivel_bateria   = self.BATERIA_sistema.percent
 
         # transforma em int
@@ -68,7 +83,7 @@ class janela1NivelBateria( QMainWindow ):
 
         self.Loop_Timer_Bateria()
 
-        #string
+        # string
         self.medida = str(self.entrada_informacao)
-        #print para janela
+        # print para janela
         self.LABEL_atualizacao_nivel.setText( self.medida )

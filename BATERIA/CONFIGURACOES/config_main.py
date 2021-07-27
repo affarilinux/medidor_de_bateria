@@ -5,5 +5,4 @@
 ''' tamanho da janela principal'''
 
 LARGURA  = 370
-ALTURA   = 125
-
+ALTURA   = 190

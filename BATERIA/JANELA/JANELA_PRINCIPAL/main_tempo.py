@@ -9,6 +9,21 @@ import  sys
 
 from PyQt5.QtWidgets     import ( QApplication, QMainWindow, QLabel )
 
+##################################################
+# ARQUIVOS.PY
+
+#SISTEMA EXTERNO
+from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
+    INTERNO_HORIZONTAL_1Y, VERTICAL_CENTER_1X, HORIZONTAL_1Y
+)
+#SISTEMA INTERNO
+from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
+    INTERNO_VERTICAL_2X
+)
+
+
+#-------------------------------------------------
+##################################################
 
 class jANELA1TemporizadorCarga ( QMainWindow ):
 
@@ -23,7 +38,14 @@ class jANELA1TemporizadorCarga ( QMainWindow ):
 
         # cor: Wheat
         self.LABEL_tempo_carga.setStyleSheet ( 
-            'QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }' ) 
+            'QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }'
+        ) 
 
-        self.LABEL_tempo_carga.move          ( 100, 5  )   # x,y externo
-        self.LABEL_tempo_carga.resize        ( 140, 30 )   # x,y interno
+        # x,y externo
+        self.LABEL_tempo_carga.move          ( VERTICAL_CENTER_1X, 
+            HORIZONTAL_1Y  
+        )   
+        # x,y interno
+        self.LABEL_tempo_carga.resize        ( INTERNO_VERTICAL_2X, 
+            INTERNO_HORIZONTAL_1Y 
+        )   

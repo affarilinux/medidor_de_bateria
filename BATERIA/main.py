@@ -40,17 +40,30 @@ from config_multi_janelas           import ( QICONE_BARRA_DE_TAREFA, TITULO,
 ### arquivos.py da janela principal
 
 ## variaveis fixas
-from JANELA.JANELA_PRINCIPAL.main_variavel_fixa    import Janela1Fixa   
+from JANELA.JANELA_PRINCIPAL.main_variavel_fixa     import Janela1Fixa   
 ## relogio de tempo de carga
-from JANELA.JANELA_PRINCIPAL.main_tempo            import ( 
+from JANELA.JANELA_PRINCIPAL.main_tempo             import ( 
      jANELA1TemporizadorCarga )
 ## carregando ou descarregando True/False
-from JANELA.JANELA_PRINCIPAL.main_estado_bateria   import (
+from JANELA.JANELA_PRINCIPAL.main_estado_bateria    import (
     Janela1EstadoCargaBateria )
 ## calculo de porcentagem ram
-from JANELA.JANELA_PRINCIPAL.main_calculo_ram      import Janela1CalculoRam           
+from JANELA.JANELA_PRINCIPAL.main_calculo_ram       import Janela1CalculoRam           
 ## nivel de carga da bateria
-from JANELA.JANELA_PRINCIPAL.main_nivel_bateria    import janela1NivelBateria         
+from JANELA.JANELA_PRINCIPAL.main_nivel_bateria     import janela1NivelBateria 
+
+from JANELA.JANELA_PRINCIPAL.main_nivel_processador import (
+    janela1NivelFrequenciaProcessador 
+)
+
+# SISTEMA EXTERNO
+from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
+    VERTICAL_ESQUERDA_1X, EXTERNO_VERTICAL_Y_2
+)
+
+from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
+    HORIZONTAL_2Y
+)
 
 
 ##################################################
@@ -130,9 +143,9 @@ class JanelaSegunda ( Janela2Fixa, QMainWindow ):
 
         self.BUTON_janela2.setText         ( "JANELA PRINCIPAL" )
 
-        # cor: PaleGreen
+        # cor: SlateBlue2
         self.BUTON_janela2.setStyleSheet   ( 
-            'QPushButton { font: bold; font-size:25px; background-color: #98FB98 }' )
+            'QPushButton { font: bold; font-size:25px; background-color: #7A67EE }' )
 
         # x,y externo
         self.BUTON_janela2.move            ( 630, 15 ) 
@@ -156,7 +169,8 @@ class JanelaSegunda ( Janela2Fixa, QMainWindow ):
 
 class Window ( Janela1Fixa, jANELA1TemporizadorCarga, 
                Janela1EstadoCargaBateria, Janela1CalculoRam, 
-               janela1NivelBateria, QMainWindow ):
+               janela1NivelBateria,janela1NivelFrequenciaProcessador,
+                QMainWindow,  ):
 
     def __init__( self ):
 
@@ -209,12 +223,17 @@ class Window ( Janela1Fixa, jANELA1TemporizadorCarga,
 
         self.BUTON_janela1.setText         ( "CONFIGURAÇÕES" )
 
-        # cor: PaleGreen
+        # cor: SlateBlue2
         self.BUTON_janela1.setStyleSheet   ( 
-            ' QPushButton { font: bold; font-size:25px; background-color: #98FB98 } ' ) 
+            ' QPushButton { font: bold; font-size:25px; background-color: #7A67EE } '
+        ) 
 
-        self.BUTON_janela1.move            ( 10,  80  )  #x,y externo
-        self.BUTON_janela1.resize          ( 230, 40  )  #x,y interno
+        #x,y externo
+        self.BUTON_janela1.move            ( VERTICAL_ESQUERDA_1X ,  
+            EXTERNO_VERTICAL_Y_2 
+        )  
+        #x,y interno
+        self.BUTON_janela1.resize          ( 230, HORIZONTAL_2Y  )  
 
 
         self.BUTON_janela1.clicked.connect ( self.Entrar_Janela_Sistema )
@@ -277,7 +296,7 @@ def main():
           
     App    = QApplication ( sys.argv )
 
-    window = Controlador  ()
+    window_ativar = Controlador  ()
 
     sys.exit              ( App.exec_ ( ) )
 
@@ -285,3 +304,4 @@ def main():
 if __name__ == "__main__":
 
     main ()
+
