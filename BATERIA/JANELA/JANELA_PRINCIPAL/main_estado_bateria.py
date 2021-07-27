@@ -4,102 +4,99 @@
 ## bibliotecas do sistema de python
 
 import  sys
-
 import psutil
 
-    ##############################################
+     #############################################
 
 from PyQt5.QtWidgets     import ( QApplication, QMainWindow, QLabel )
-
 from PyQt5.QtCore        import QTimer
 
 ##################################################
-#arquivo.py
+##arquivos.py sistema app
 
-# externo
+#SISTEMA EXTERNO
 from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
-    VERTICAL_DIREITA_1X, EXTERNO_VERTICAL_Y_1
+     VERTICAL_CENTER_1X, HORIZONTAL_2Y
 )
-# interno
+#SISTEMA INTERNO
 from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
-    INTERNO_VERTICAL_4X, INTERNO_HORIZONTAL_3Y
+     INTERNO_VERTICAL_2X, INTERNO_HORIZONTAL_1Y
 )
 
-class Janela1CalculoRam ( QMainWindow ):
+##################################################
+# arquivo.py
 
-    def __init__( self ):
+from TEMPORIZADOR.timer  import CHAMADA_5000
 
-        super ().__init__()    # metodo construtor
 
-        ##########################################
-        #label
+#-------------------------------------------------
+#################################################
 
-        self.LABEL_usado_de_ram  = QLabel     ( self )
+class Janela1EstadoCargaBateria ( QMainWindow ):
 
-        # cor: Wheat
-        self.LABEL_usado_de_ram.setStyleSheet ( 
-            'QLabel { font: bold; font-size:25px; background-color: #00BFFF}' ) 
+     def __init__ ( self ):
 
-        # x,y externo
-        self.LABEL_usado_de_ram.move          ( VERTICAL_DIREITA_1X, 
-            EXTERNO_VERTICAL_Y_1
-        )  
-         # x,y interno
-        self.LABEL_usado_de_ram.resize        ( INTERNO_VERTICAL_4X,  
-            INTERNO_HORIZONTAL_3Y 
-        ) 
+          super ().__init__()  # metodo construtor
 
-        ##########################################
-        # primeira chamada de apresentação label
+          #label variavel
+          self.LABEL_atualizacao_carregamento  = QLabel     ( self )
 
-        self. Sistema_Ram_Por_centagem ()
-        
-        ##########################################
-        #loop
-
-        self.TIMER_loop_calculo = QTimer        ( self )
-
-        self.TIMER_loop_calculo.setInterval     ( 5000 )
-        self.TIMER_loop_calculo.start           ()
-
-        # chamada de função
-        self.TIMER_loop_calculo.timeout.connect ( 
-            self.Sistema_Ram_Por_centagem ) 
-
-    ##############################################
-    #informações ram
-
-    def  Computador_Sistema( self ):
-
-        #informações da memoria ram
-        self.informacao           = psutil.virtual_memory ()
-
-        # puxa as informações e adiciona nas variaveis
-        self.total                = self.informacao.total
-        self.usada                = self.informacao.active
-
-        # calcula porcentagm
-        self.calculo_por_centagem      = ( self.usada * 100 ) / self.total
-
-        # filtra o float
-        self.calculo_filtro_informacao = round ( self.calculo_por_centagem, 2 )
-
-    ##############################################
-    #apresentação label do sistema
-
-    def Sistema_Ram_Por_centagem( self ):
-                  
-        self.Computador_Sistema() # chamada de função
-        
-        # transforma em string a informação float
-        self.string_dados = str         ( self.calculo_filtro_informacao) 
-        # apresentação
-        self.LABEL_usado_de_ram.setText ( self.string_dados ) 
-
-    
+          # cor: Wheat
+          self.LABEL_atualizacao_carregamento.setStyleSheet (
+               'QLabel { font: bold; font-size:15px; background-color: #F5DEB3 }'
+          ) 
           
-        
+          # x,y externo
+          self.LABEL_atualizacao_carregamento.move          ( 
+               VERTICAL_CENTER_1X, HORIZONTAL_2Y 
+          )
+          # x,y interno                   
+          self.LABEL_atualizacao_carregamento.resize        ( 
+               INTERNO_VERTICAL_2X, INTERNO_HORIZONTAL_1Y 
+          )                   
+
+          ##########################################
+          # primeira chamada de apresentação label
+
+          self.Chamada_Sistema_Interno()  
+
+          ##########################################
+          # loop
+
+          self.TIMER_estado_chamada = QTimer        ( self )
+
+          self.TIMER_estado_chamada.setInterval     ( CHAMADA_5000 )
+          self.TIMER_estado_chamada.start           ()
+
+          #chamada de funçãO
+          self.TIMER_estado_chamada.timeout.connect ( self.Chamada_Sistema_Interno ) 
+
+     def Chamada_Sistema_Interno( self ):
+
+          # puxa os dado do sistema operacional
+          self.informacao_bateria = psutil.sensors_battery()
+
+          # puxa uma informação se esta plugado na internet
+          self.informacao_carregamento = self.informacao_bateria.power_plugged      
+
+          if self.informacao_carregamento   == True :
+
+               self.Estado_True_Carregamento()
+
+          elif self.informacao_carregamento == False :
+
+               self.Estado_False_Carregamento()
 
 
+     #############################################
+     # estados
 
+     def Estado_True_Carregamento( self ):                        # true
 
+          self.LABEL_atualizacao_carregamento.setText ( " CARREGANDO" )
+
+          ########################################
+
+     def Estado_False_Carregamento( self ):                      # false
+
+          self.LABEL_atualizacao_carregamento.setText ( " DESCARREGANDO" )
