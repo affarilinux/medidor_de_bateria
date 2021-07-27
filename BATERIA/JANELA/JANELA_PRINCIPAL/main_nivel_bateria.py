@@ -23,7 +23,8 @@ from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
 from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
     ENTRY_HORIZONTAL_1X
 )
-
+# temporizador
+from TEMPORIZADOR.timer    import CHAMADA_5000
 class janela1NivelBateria( QMainWindow ):
 
     def __init__( self ):
@@ -59,7 +60,7 @@ class janela1NivelBateria( QMainWindow ):
 
         self.TIMER_loop_nivel = QTimer        ( self )
 
-        self.TIMER_loop_nivel.setInterval     ( 5000 )
+        self.TIMER_loop_nivel.setInterval     ( CHAMADA_5000 )
         self.TIMER_loop_nivel.start           ()
 
         #chamada de funçãO
