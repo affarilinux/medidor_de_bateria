@@ -51,14 +51,17 @@ class janela1NivelFrequenciaProcessador( QMainWindow ):
             HORIZONTAL_2Y
         )     
 
+        ##########################################
+        # banco de dados
 
         self.processador_conexao = sqlite3.connect ( BANCO_INTERNO_SQLITE3 )
         self.cursor              = self.processador_conexao.cursor()
 
         self.cursor.execute (
-            '''CREATE TABLE if not exists MONTANTE_PROCESSADOR( id integer primary key,
-                                                 QUANTIDADE REAL                                      
-                                                )'''
+            '''CREATE TABLE if not exists  MONTANTE_PROCESSADOR( 
+                id integer primary key,
+                quantidade real                                      
+                )'''
         )
         ##########################################
         # primeira chamada de apresentação label
@@ -106,7 +109,6 @@ class janela1NivelFrequenciaProcessador( QMainWindow ):
 
         self.Psutil_Chamada ()
         
-
         # transforma em string a informação float
         self.string_para_print = str ( self.filtra_calculo_sistema) 
         # apresentação
@@ -116,7 +118,11 @@ class janela1NivelFrequenciaProcessador( QMainWindow ):
     
     def banco(self):
 
-        self.cursor.execute( 'INSERT INTO MONTANTE_PROCESSADOR(QUANTIDADE) VALUES(?)', (self.string_para_print,))
+        self.cursor.execute( 
+            'INSERT INTO MONTANTE_PROCESSADOR(quantidade) VALUES(?)', 
+            (self.string_para_print, )
+        )
+        
 
         self.processador_conexao.commit()
         #cursor.close()

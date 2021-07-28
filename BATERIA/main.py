@@ -6,6 +6,7 @@
 ### bibliotecas do sistema de python
 
 import  sys
+import sqlite3
 
     ##############################################
 
@@ -80,6 +81,10 @@ from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
 
 #variaveis fixas
 from JANELA.JANELA_SECUNDARIA.sec_variavel_fixa    import Janela2Fixa
+
+##################################################
+# banco de dados
+from config_multi_janelas  import BANCO_INTERNO_SQLITE3
 
 ##################################################
 ### arquivos.py da janela auxiliar
@@ -284,7 +289,7 @@ class Window ( Janela1Fixa, jANELA1TemporizadorCarga,
         # disconectar o sinal de abrir janela
         self.sinal_jan_1.sinal1.disconnect () 
 
-    ##########################################
+    ##############################################
     ## janela auxiliar
 
     def Loop_Parte1(self):
@@ -299,21 +304,27 @@ class Window ( Janela1Fixa, jANELA1TemporizadorCarga,
 
     def Janela_Auxiliar_Chamada (self):
 
+        self.main_banco_processador = sqlite3.connect ( BANCO_INTERNO_SQLITE3 )
+        self.cursor_main            = self.main_banco_processador.cursor()
+
         # informação bateria
 
-        self.MINIMO_BATERIA = 20
+        self.MINIMO_BATERIA = 19
         self.MAXIMO_BATERIA = 90
         
         # informação processador
 
-        self.NIVEL_PROCESSADOR = 90
+        self.cursor_main.execute('SELECT *FROM MONTANTE_PROCESSADOR where id = "1" ')
+        self.resultado = self.cursor_main.fetchone()
+
+        self.parte_1 = self.resultado[1]
 
         # informação ram
 
         self.NIVEL_RAM   = 90
 
         ## chama a janela auxiliar
-        if self.MINIMO_BATERIA == 20:
+        if self.parte_1 >= 10:
             self.tela_3 = JanelaAuxialiar()
             self.tela_3.show()
 
