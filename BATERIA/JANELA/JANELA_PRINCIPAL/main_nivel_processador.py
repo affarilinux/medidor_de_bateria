@@ -27,7 +27,6 @@ from JANELA.JANELA_PRINCIPAL.CONFIGURACOES_PRIMARIA.dimensionamento import (
 from config_multi_janelas  import BANCO_INTERNO_SQLITE3
 
 
-
 class janela1NivelFrequenciaProcessador( QMainWindow ):
 
     def __init__( self ):
@@ -51,18 +50,6 @@ class janela1NivelFrequenciaProcessador( QMainWindow ):
             HORIZONTAL_2Y
         )     
 
-        ##########################################
-        # banco de dados
-
-        self.processador_conexao = sqlite3.connect ( BANCO_INTERNO_SQLITE3 )
-        self.cursor              = self.processador_conexao.cursor()
-
-        self.cursor.execute (
-            '''CREATE TABLE if not exists  MONTANTE_PROCESSADOR( 
-                id integer primary key,
-                quantidade real                                      
-                )'''
-        )
         ##########################################
         # primeira chamada de apresentação label
 
@@ -113,17 +100,33 @@ class janela1NivelFrequenciaProcessador( QMainWindow ):
         self.string_para_print = str ( self.filtra_calculo_sistema) 
         # apresentação
         self.LABEL_nivel_processador_center.setText( self.string_para_print )
-        self.banco()
+
+        self.banco() #banco de dados
 
     
     def banco(self):
 
-        self.cursor.execute( 
-            'INSERT INTO MONTANTE_PROCESSADOR(quantidade) VALUES(?)', 
-            (self.string_para_print, )
+        self.processador_conexao = sqlite3.connect ( BANCO_INTERNO_SQLITE3 )
+        self.cursor_banco            = self.processador_conexao.cursor()
+
+        self.cursor_banco.execute (
+            '''CREATE TABLE if not exists  MONTANTE_PROCESSADOR( 
+                id integer primary key,
+                quantidade real                                      
+                )'''
         )
+        
+        self.cursor_banco.execute("SELECT COUNT(*) FROM MONTANTE_PROCESSADOR"   )
+        self.quantidade_linha = self.cursor_banco.fetchone()
+
+        if self.quantidade_linha[0] <= 4:
+        
+            self.cursor_banco.execute( 
+                'INSERT INTO MONTANTE_PROCESSADOR(quantidade) VALUES(?)', 
+                (self.string_para_print, )
+            )
         
 
         self.processador_conexao.commit()
-        #cursor.close()
-        #processador_conexao.close()
+        self.cursor_banco.close()
+        self.processador_conexao.close()
